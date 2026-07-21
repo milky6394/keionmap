@@ -47,30 +47,31 @@
       font-size: 14px;
     }
 
-/* 全体表示領域 */
-.viewport {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-  /* 💡 スマホの標準スクロールやダブルタップ拡大を無効化し、Panzoomに操作を委ねる */
-  touch-action: none;
-  background-color: #1a1a1a;
-}
+    /* 全体表示領域（画面全体で指のドラッグを受け付ける） */
+    .viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      touch-action: none; /* スマホ標準のスクロール・拡大を無効化 */
+      background-color: #1a1a1a;
+      cursor: grab;
+    }
 
-.map-stage {
-  position: relative;
-  aspect-ratio: 16 / 9; /* ご自身の画像の縦横比 */
-  width: 100vw;
-  max-width: 100%;
-  margin: 0 auto;
-  /* 💡 タッチ操作時の意図しないテキスト選択やハイライトを防止 */
-  user-select: none;
-  -webkit-user-select: none;
-}
+    /* マップのステージ */
+    .map-stage {
+      position: relative;
+      aspect-ratio: 16 / 9; /* 画像の縦横比 */
+      width: 100vw;
+      max-width: 100%;
+      margin: 0 auto;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     /* 背景画像 */
     .map-image {
       width: 100%;
@@ -90,7 +91,8 @@
 
     /* 当たり判定エリア */
     .building-area {
-      fill: rgba(255, 255, 255, 1); /* タップに反応させるため極小の不透明度 */
+      /* タップに反応させるため極小の不透明度（見た目はほぼ透明） */
+      fill: rgba(255, 255, 255, 0.01);
       stroke: transparent;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -138,8 +140,7 @@
       <!-- ① マップ画像 -->
       <img src="stage.png" alt="Map" class="map-image">
 
-      <!-- ② SVG判定（viewBoxの数値はご自身の「画像サイズ（幅x高さ）」に合わせると座標打ちが楽になります） -->
-      <!-- 例: 1920x1080の画像なら viewBox="0 0 1920 1080" -->
+      <!-- ② SVG判定 -->
       <svg class="map-svg" viewBox="0 0 1280 720">
         <!-- 建物1 (座標例) -->
         <polygon class="building-area" data-id="castle" points="800,200 1100,200 1150,500 750,500" />
@@ -160,34 +161,23 @@
   </div>
 
   <script>
-const stage = document.getElementById('mapStage');
-const viewport = document.getElementById('viewport');
+    const stage = document.getElementById('mapStage');
+    const viewport = document.getElementById('viewport');
 
-// 💡 スマホのタッチ操作に最適化した Panzoom 設定
-const panzoom = Panzoom(stage, {
-  maxScale: 5,
-  minScale: 0.5,
-  contain: false,
-  // 二本指でピンチ（拡大縮小）したとき、指の中央を軸にしてスムーズに拡大する設定
-  pinchAndPan: true,
-  canvas: true, // タッチ領域を安定させる設定
-});
+    // 💡 親要素（viewport）全体で操作を受け付ける Panzoom 設定
+    const panzoom = Panzoom(stage, {
+      maxScale: 5,
+      minScale: 0.5,
+      contain: false,
+      pinchAndPan: true,
+      canvas: true,
+      // 黒背景部分を含めた画面全体でドラッグを受け付ける設定
+      eventListenerContainer: viewport
+    });
 
-// 💡 「画面全体のどこを触っても」ドラッグ＆ピンチ移動できるようにイベントをバインド
-viewport.addEventListener('pointerdown', (event) => {
-  panzoom.handleDown(event);
-});
-viewport.addEventListener('pointermove', (event) => {
-  panzoom.handleMove(event);
-});
-viewport.addEventListener('pointerup', (event) => {
-  panzoom.handleUp(event);
-});
+    // PCのマウスホイール操作用（カーソル位置を中心に拡大）
+    viewport.addEventListener('wheel', panzoom.zoomWithWheel);
 
-// PCのマウスホイール操作用（カーソル位置を中心に拡大）
-viewport.addEventListener('wheel', (event) => {
-  panzoom.zoomWithWheel(event);
-});
     // 建物の説明データ
     const buildingData = {
       castle: { title: "🏰 お城", desc: "王様がいる城エリアです。" },
@@ -200,9 +190,8 @@ viewport.addEventListener('wheel', (event) => {
     const areas = document.querySelectorAll('.building-area');
 
     areas.forEach(area => {
-      // 指でドラッグした後の離した時と「タップ」を区別して反応させる
       area.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.stopPropagation(); // 背景タップイベントへの伝播を防止
         const id = area.getAttribute('data-id');
         const data = buildingData[id];
 
@@ -221,7 +210,8 @@ viewport.addEventListener('wheel', (event) => {
       areas.forEach(a => a.classList.remove('active'));
     }
 
-    document.getElementById('viewport').addEventListener('click', () => {
+    // マップの何もない背景をタップしたら閉じる
+    viewport.addEventListener('click', () => {
       closeInfo();
     });
   </script>
