@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タウンマップ - タップテスト</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none; /* スマホ長押し時のテキスト選択を防止 */
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #2c3e50;
+      color: #333;
+      overflow: hidden; /* 画面全体の余計なスクロールを防止 */
+    }
+
+    /* ヘッダー */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    /* マップのコンテナ */
+    .map-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* 本番はここに background-image: url('map.png'); を入れます */
+      background: #7ebd51; /* 仮の緑の草地背景 */
+    }
+
+    /* 背景の仮イラストテキスト */
+    .bg-label {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 24px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    /* SVGオーバーレイ（タップ判定 & ハイライト用） */
+    .map-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* タップエリア（SVG要素）の共通デザイン */
+    .building-area {
+      fill: rgba(255, 255, 255, 0.1); /* 通常時はほぼ透明 */
+      stroke: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    /* ⭐ アクティブ（選択中）時のハイライトスタイル */
+    .building-area.active {
+      fill: rgba(241, 196, 15, 0.4); /* 黄色く光る */
+      stroke: #f1c40f;               /* クッキリした黄色の枠線 */
+      stroke-width: 4px;
+      filter: drop-shadow(0 0 8px #f1c40f);
+    }
+
+    /* 説明文（ボトムシート） */
+    .info-sheet {
+      position: fixed;
+      bottom: -100%; /* 初期状態は画面外に隠す */
+      left: 0;
+      width: 100%;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 24px 32px 24px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+      transition: bottom 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+      z-index: 100;
+    }
+
+    /* 表示状態クラス */
+    .info-sheet.open {
+      bottom: 0; /* 下からスッと表示 */
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .info-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .close-btn {
+      background: #eee;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .info-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #666;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <span>🏰 王都マップ</span>
+    <a href="index.html" class="back-btn">メニューへ</a>
+  </div>
+
+  <!-- マップエリア -->
+  <div class="map-container" id="mapContainer">
+    <div class="bg-label">※タップして試せます</div>
+
+    <!-- SVGの当たり判定レイヤー (画面全体 1000x1000 基準) -->
+    <svg class="map-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+      
+      <!-- 建物1: 王城 (多角形ポリゴンで判定テスト) -->
+      <polygon 
+        class="building-area" 
+        data-id="castle"
+        points="400,200 600,200 650,400 350,400" 
+      />
+
+      <!-- 建物2: 道具屋 (角丸長方形で判定テスト) -->
+      <rect 
+        class="building-area" 
+        data-id="shop"
+        x="150" y="550" width="250" height="200" rx="15"
+      />
+
+      <!-- 建物3: ギルド (円で判定テスト) -->
+      <circle 
+        class="building-area" 
+        data-id="guild"
+        cx="750" cy="650" r="120"
+      />
+
+    </svg>
+  </div>
+
+  <!-- 説明カード（ポップアップ） -->
+  <div class="info-sheet" id="infoSheet">
+    <div class="info-header">
+      <h2 class="info-title" id="infoTitle">建物名</h2>
+      <button class="close-btn" onclick="closeInfo()">✕</button>
+    </div>
+    <p class="info-desc" id="infoDesc">説明文がここに表示されます。</p>
+  </div>
+
+  <script>
+    // 各建物の情報データ
+    const buildingData = {
+      castle: {
+        title: "🏰 王国の中央城",
+        desc: "街の中心に君臨する巨大なお城。王様と騎士団が滞在しており、重要なイベントが発生します。"
+      },
+      shop: {
+        title: "🏪 道具屋ポーション亭",
+        desc: "冒険に必要なポーションや薬草、毒消しを購入できるお店。店主のバドさんは少し頑固者です。"
+      },
+      guild: {
+        title: "⚔️ 冒険者ギルド",
+        desc: "全国の依頼が集まる場所。ここでクエストを受注したり、レベルアップの報告を行えます。"
+      }
+    };
+
+    const infoSheet = document.getElementById('infoSheet');
+    const infoTitle = document.getElementById('infoTitle');
+    const infoDesc = document.getElementById('infoDesc');
+    const areas = document.querySelectorAll('.building-area');
+
+    // エリアがタップされた時の処理
+    areas.forEach(area => {
+      area.addEventListener('click', (e) => {
+        e.stopPropagation(); // 背景タップイベントへの伝播を防止
+
+        const id = area.getAttribute('data-id');
+        const data = buildingData[id];
+
+        if (data) {
+          // すべてのハイライトを一旦消す
+          areas.forEach(a => a.classList.remove('active'));
+
+          // タップされた建物だけハイライト
+          area.classList.add('active');
+
+          // 説明テキストをセットしてシートを表示
+          infoTitle.textContent = data.title;
+          infoDesc.textContent = data.desc;
+          infoSheet.classList.add('open');
+        }
+      });
+    });
+
+    // 説明を閉じる関数
+    function closeInfo() {
+      infoSheet.classList.remove('open');
+      areas.forEach(a => a.classList.remove('active'));
+    }
+
+    // マップの何もない背景をタップしたら閉じる
+    document.getElementById('mapContainer').addEventListener('click', () => {
+      closeInfo();
+    });
+  </script>
+</body>
+</html>
