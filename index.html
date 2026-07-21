@@ -2,43 +2,69 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <!-- スマホの画面サイズに綺麗に合わせるための必須設定 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マップアプリ テスト</title>
+  <title>マップアプリ - ホーム</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f2f5;
+      justify-content: center;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
-    .card {
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .container {
+      width: 100%;
+      max-width: 400px;
       text-align: center;
     }
     h1 {
-      color: #333;
-      margin-bottom: 8px;
+      color: #2c3e50;
+      font-size: 24px;
+      margin-bottom: 24px;
     }
-    p {
-      color: #666;
-      margin: 0;
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px; /* ボタン同士の間隔 */
     }
+    .btn {
+      display: block;
+      padding: 16px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    /* スマホでタップした時のポチッとした反応 */
+    .btn:active {
+      transform: scale(0.98);
+      background-color: #2980b9;
+    }
+    /* ボタンごとの色チェンジ（お好みで） */
+    .btn-map { background-color: #2ecc71; }
+    .btn-info { background-color: #e67e22; }
+    .btn-setting { background-color: #9b59b6; }
   </style>
 </head>
+
 <body>
-
-  <div class="card">
-    <h1>🗺️ マップアプリ</h1>
-    <p>GitHub Pages の接続テスト成功です！</p>
+  <div class="container">
+    <h1>🗺️ メインメニュー</h1>
+    <div class="button-group">
+      <!-- それぞれのHTMLファイルへ遷移するボタン -->
+      <a href="map.html" class="btn btn-map">🗺️ タップマップを開く</a>
+      <a href="page2.html" class="btn btn-info">📜 建物一覧を見る</a>
+      <a href="page3.html" class="btn btn-setting">ℹ️ このアプリについて</a>
+    </div>
   </div>
-
 </body>
 </html>
