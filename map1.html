@@ -44,16 +44,18 @@
     }
 
     /* マップのコンテナ */
-    .map-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      /* 本番はここに background-image: url('map.png'); を入れます */
-      background: #7ebd51; /* 仮の緑の草地背景 */
-    }
+.map-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  /* 画像ファイルのパスを指定 */
+  background-image: url('stage.png');
+  /* 画像の比率を保ったまま画面ぴったりに表示する設定 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #1a1a1a; /* 画像の外側の余白の色 */
+}
 
     /* 背景の仮イラストテキスト */
     .bg-label {
@@ -176,6 +178,12 @@
         cx="750" cy="650" r="120"
       />
 
+      <!-- 建物4: ギルド (円で判定テスト) -->
+      <circle 
+        class="building-area" 
+        data-id="guild2"
+        cx="750" cy="250" r="120"
+      />
     </svg>
   </div>
 
@@ -201,6 +209,10 @@
       },
       guild: {
         title: "⚔️ 冒険者ギルド",
+        desc: "全国の依頼が集まる場所。ここでクエストを受注したり、レベルアップの報告を行えます。"
+      },
+      guild2: {
+        title: "⚔️ 冒険者ギルド2",
         desc: "全国の依頼が集まる場所。ここでクエストを受注したり、レベルアップの報告を行えます。"
       }
     };
