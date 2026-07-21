@@ -54,23 +54,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  touch-action: none;
   overflow: hidden;
   position: relative;
+  /* 💡 スマホの標準スクロールやダブルタップ拡大を無効化し、Panzoomに操作を委ねる */
+  touch-action: none;
+  background-color: #1a1a1a;
 }
 
-/* 🗺️ マップのステージ */
 .map-stage {
   position: relative;
-  /* 画像の比率に合わせる（例: 16/9） */
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9; /* ご自身の画像の縦横比 */
   width: 100vw;
   max-width: 100%;
-  /* 余計な余白によるズレを防止 */
   margin: 0 auto;
-  transform-origin: center center;
+  /* 💡 タッチ操作時の意図しないテキスト選択やハイライトを防止 */
+  user-select: none;
+  -webkit-user-select: none;
 }
-
     /* 背景画像 */
     .map-image {
       width: 100%;
@@ -161,18 +161,33 @@
 
   <script>
 const stage = document.getElementById('mapStage');
+const viewport = document.getElementById('viewport');
 
-// Panzoomの初期化設定
+// 💡 スマホのタッチ操作に最適化した Panzoom 設定
 const panzoom = Panzoom(stage, {
-  maxScale: 5,        // 最大5倍まで拡大可能
-  minScale: 0.5,      // 画面より小さく縮小も可能に
-  contain: false,     // 💡 移動制限をオフにして、端まで自由にスライドできるようにする
-  startScale: 1       // 初期倍率
+  maxScale: 5,
+  minScale: 0.5,
+  contain: false,
+  // 二本指でピンチ（拡大縮小）したとき、指の中央を軸にしてスムーズに拡大する設定
+  pinchAndPan: true,
+  canvas: true, // タッチ領域を安定させる設定
 });
 
-// マウスホイールでの拡大縮小
-stage.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+// 💡 「画面全体のどこを触っても」ドラッグ＆ピンチ移動できるようにイベントをバインド
+viewport.addEventListener('pointerdown', (event) => {
+  panzoom.handleDown(event);
+});
+viewport.addEventListener('pointermove', (event) => {
+  panzoom.handleMove(event);
+});
+viewport.addEventListener('pointerup', (event) => {
+  panzoom.handleUp(event);
+});
 
+// PCのマウスホイール操作用（カーソル位置を中心に拡大）
+viewport.addEventListener('wheel', (event) => {
+  panzoom.zoomWithWheel(event);
+});
     // 建物の説明データ
     const buildingData = {
       castle: { title: "🏰 お城", desc: "王様がいる城エリアです。" },
