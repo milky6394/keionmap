@@ -143,9 +143,9 @@
       <!-- ② SVG判定 -->
       <svg class="map-svg" viewBox="0 0 1280 720">
         <!-- 建物1 (座標例) -->
-        <polygon class="building-area" data-id="castle" points="800,200 1100,200 1150,500 750,500" />
+        <polygon class="building-area" data-id="marshall" points="955,230 1015,230 1015,50 1025,50 1025,230 1080,230 1080,300 955,300" />
         <!-- 建物2 (座標例) -->
-        <rect class="building-area" data-id="shop" x="200" y="600" width="300" height="250" rx="15" />
+        <rect class="building-area" data-id="JC" x="200" y="600" width="300" height="250" rx="15" />
       </svg>
 
     </div>
@@ -180,8 +180,8 @@
 
     // 建物の説明データ
     const buildingData = {
-      castle: { title: "🏰 お城", desc: "王様がいる城エリアです。" },
-      shop: { title: "🏪 道具屋", desc: "アイテムを購入できるショップです。" }
+      marshall: { title: "マーシャル", desc: "ギターアンプのマーシャルです" },
+      JC: { title: "ジャズコーラス", desc: "ギターアンプのジャズコーラスです" }
     };
 
     const infoSheet = document.getElementById('infoSheet');
