@@ -2,30 +2,35 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>タウンマップ - タップテスト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>タウンマップ</title>
+  <!-- スマホの指操作（パン・ズーム）を快適にするライブラリ -->
+  <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
-      user-select: none; /* スマホ長押し時のテキスト選択を防止 */
+      user-select: none;
+      -webkit-user-select: none;
     }
     body {
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #2c3e50;
+      background-color: #1a1a1a;
       color: #333;
-      overflow: hidden; /* 画面全体の余計なスクロールを防止 */
+      overflow: hidden; /* 余計なスクロールを禁止 */
+      width: 100vw;
+      height: 100vh;
     }
 
     /* ヘッダー */
     .header {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       padding: 12px 16px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(4px);
       color: white;
       display: flex;
@@ -36,37 +41,45 @@
     .back-btn {
       color: white;
       text-decoration: none;
-      font-weight: bold;
       background: rgba(255,255,255,0.2);
       padding: 6px 12px;
       border-radius: 6px;
       font-size: 14px;
     }
 
-    /* マップのコンテナ */
-.map-container {
-  position: relative;
+/* 全体表示領域 */
+.viewport {
   width: 100vw;
   height: 100vh;
-  /* 画像ファイルのパスを指定 */
-  background-image: url('stage.png');
-  /* 画像の比率を保ったまま画面ぴったりに表示する設定 */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #1a1a1a; /* 画像の外側の余白の色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+  overflow: hidden;
+  position: relative;
 }
 
-    /* 背景の仮イラストテキスト */
-    .bg-label {
-      position: absolute;
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 24px;
-      font-weight: bold;
-      pointer-events: none;
+/* 🗺️ マップのステージ */
+.map-stage {
+  position: relative;
+  /* 画像の比率に合わせる（例: 16/9） */
+  aspect-ratio: 16 / 9;
+  width: 100vw;
+  max-width: 100%;
+  /* 余計な余白によるズレを防止 */
+  margin: 0 auto;
+  transform-origin: center center;
+}
+
+    /* 背景画像 */
+    .map-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none; /* 画像へのタッチイベントを透過 */
     }
 
-    /* SVGオーバーレイ（タップ判定 & ハイライト用） */
+    /* SVGオーバーレイ（画像と寸分たがわず完全密着） */
     .map-svg {
       position: absolute;
       top: 0;
@@ -75,26 +88,26 @@
       height: 100%;
     }
 
-    /* タップエリア（SVG要素）の共通デザイン */
+    /* 当たり判定エリア */
     .building-area {
-      fill: rgba(255, 255, 255, 0.1); /* 通常時はほぼ透明 */
+      fill: rgba(255, 255, 255, 1); /* タップに反応させるため極小の不透明度 */
       stroke: transparent;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    /* ⭐ アクティブ（選択中）時のハイライトスタイル */
+    /* ハイライト表示 */
     .building-area.active {
-      fill: rgba(241, 196, 15, 0.4); /* 黄色く光る */
-      stroke: #f1c40f;               /* クッキリした黄色の枠線 */
-      stroke-width: 4px;
-      filter: drop-shadow(0 0 8px #f1c40f);
+      fill: rgba(241, 196, 15, 0.4);
+      stroke: #f1c40f;
+      stroke-width: 3px;
+      filter: drop-shadow(0 0 6px #f1c40f);
     }
 
-    /* 説明文（ボトムシート） */
+    /* 説明シート */
     .info-sheet {
       position: fixed;
-      bottom: -100%; /* 初期状態は画面外に隠す */
+      bottom: -100%;
       left: 0;
       width: 100%;
       background: white;
@@ -104,90 +117,40 @@
       transition: bottom 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
       z-index: 100;
     }
-
-    /* 表示状態クラス */
-    .info-sheet.open {
-      bottom: 0; /* 下からスッと表示 */
-    }
-
-    .info-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .info-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 0;
-      color: #2c3e50;
-    }
-
-    .close-btn {
-      background: #eee;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .info-desc {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #666;
-      margin: 0;
-    }
+    .info-sheet.open { bottom: 0; }
+    .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .info-title { font-size: 20px; font-weight: bold; margin: 0; color: #2c3e50; }
+    .close-btn { background: #eee; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
+    .info-desc { font-size: 14px; line-height: 1.6; color: #666; margin: 0; }
   </style>
 </head>
 <body>
 
-  <!-- ヘッダー -->
   <div class="header">
-    <span>🏰 王都マップ</span>
+    <span>🏰 ワールドマップ</span>
     <a href="index.html" class="back-btn">メニューへ</a>
   </div>
 
-  <!-- マップエリア -->
-  <div class="map-container" id="mapContainer">
-    <div class="bg-label">※タップして試せます</div>
-
-    <!-- SVGの当たり判定レイヤー (画面全体 1000x1000 基準) -->
-    <svg class="map-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+  <div class="viewport" id="viewport">
+    <!-- 画像とSVGを入れる共通の箱（ここが一緒に移動・拡大縮小する） -->
+    <div class="map-stage" id="mapStage">
       
-      <!-- 建物1: 王城 (多角形ポリゴンで判定テスト) -->
-      <polygon 
-        class="building-area" 
-        data-id="castle"
-        points="400,200 600,200 650,400 350,400" 
-      />
+      <!-- ① マップ画像 -->
+      <img src="stage.png" alt="Map" class="map-image">
 
-      <!-- 建物2: 道具屋 (角丸長方形で判定テスト) -->
-      <rect 
-        class="building-area" 
-        data-id="shop"
-        x="150" y="550" width="250" height="200" rx="15"
-      />
+      <!-- ② SVG判定（viewBoxの数値はご自身の「画像サイズ（幅x高さ）」に合わせると座標打ちが楽になります） -->
+      <!-- 例: 1920x1080の画像なら viewBox="0 0 1920 1080" -->
+      <svg class="map-svg" viewBox="0 0 1280 720">
+        <!-- 建物1 (座標例) -->
+        <polygon class="building-area" data-id="castle" points="800,200 1100,200 1150,500 750,500" />
+        <!-- 建物2 (座標例) -->
+        <rect class="building-area" data-id="shop" x="200" y="600" width="300" height="250" rx="15" />
+      </svg>
 
-      <!-- 建物3: ギルド (円で判定テスト) -->
-      <circle 
-        class="building-area" 
-        data-id="guild"
-        cx="750" cy="650" r="120"
-      />
-
-      <!-- 建物4: ギルド (円で判定テスト) -->
-      <circle 
-        class="building-area" 
-        data-id="guild2"
-        cx="750" cy="250" r="120"
-      />
-    </svg>
+    </div>
   </div>
 
-  <!-- 説明カード（ポップアップ） -->
+  <!-- 説明ポップアップ -->
   <div class="info-sheet" id="infoSheet">
     <div class="info-header">
       <h2 class="info-title" id="infoTitle">建物名</h2>
@@ -197,24 +160,23 @@
   </div>
 
   <script>
-    // 各建物の情報データ
+const stage = document.getElementById('mapStage');
+
+// Panzoomの初期化設定
+const panzoom = Panzoom(stage, {
+  maxScale: 5,        // 最大5倍まで拡大可能
+  minScale: 0.5,      // 画面より小さく縮小も可能に
+  contain: false,     // 💡 移動制限をオフにして、端まで自由にスライドできるようにする
+  startScale: 1       // 初期倍率
+});
+
+// マウスホイールでの拡大縮小
+stage.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+
+    // 建物の説明データ
     const buildingData = {
-      castle: {
-        title: "🏰 王国の中央城",
-        desc: "街の中心に君臨する巨大なお城。王様と騎士団が滞在しており、重要なイベントが発生します。"
-      },
-      shop: {
-        title: "🏪 道具屋ポーション亭",
-        desc: "冒険に必要なポーションや薬草、毒消しを購入できるお店。店主のバドさんは少し頑固者です。"
-      },
-      guild: {
-        title: "⚔️ 冒険者ギルド",
-        desc: "全国の依頼が集まる場所。ここでクエストを受注したり、レベルアップの報告を行えます。"
-      },
-      guild2: {
-        title: "⚔️ 冒険者ギルド2",
-        desc: "全国の依頼が集まる場所。ここでクエストを受注したり、レベルアップの報告を行えます。"
-      }
+      castle: { title: "🏰 お城", desc: "王様がいる城エリアです。" },
+      shop: { title: "🏪 道具屋", desc: "アイテムを購入できるショップです。" }
     };
 
     const infoSheet = document.getElementById('infoSheet');
@@ -222,22 +184,16 @@
     const infoDesc = document.getElementById('infoDesc');
     const areas = document.querySelectorAll('.building-area');
 
-    // エリアがタップされた時の処理
     areas.forEach(area => {
+      // 指でドラッグした後の離した時と「タップ」を区別して反応させる
       area.addEventListener('click', (e) => {
-        e.stopPropagation(); // 背景タップイベントへの伝播を防止
-
+        e.stopPropagation();
         const id = area.getAttribute('data-id');
         const data = buildingData[id];
 
         if (data) {
-          // すべてのハイライトを一旦消す
           areas.forEach(a => a.classList.remove('active'));
-
-          // タップされた建物だけハイライト
           area.classList.add('active');
-
-          // 説明テキストをセットしてシートを表示
           infoTitle.textContent = data.title;
           infoDesc.textContent = data.desc;
           infoSheet.classList.add('open');
@@ -245,14 +201,12 @@
       });
     });
 
-    // 説明を閉じる関数
     function closeInfo() {
       infoSheet.classList.remove('open');
       areas.forEach(a => a.classList.remove('active'));
     }
 
-    // マップの何もない背景をタップしたら閉じる
-    document.getElementById('mapContainer').addEventListener('click', () => {
+    document.getElementById('viewport').addEventListener('click', () => {
       closeInfo();
     });
   </script>
