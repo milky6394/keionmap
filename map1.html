@@ -154,9 +154,12 @@
       <svg class="map-svg" viewBox="0 0 1280 720">
         <polygon class="building-area" data-id="marshall" points="955,230 1015,230 1015,55 230,55 230,45 1025,45 1025,230 1080,230 1080,300 955,300" />
         <polygon class="building-area" data-id="JC" points="785,230 835,230 835,55 230,55 230,45 845,45 845,230 895,230 895,300 785,300" />
-        <polygon class="building-area" data-id="CenterVocal" points="670,230 750,230 750,55 230,55 230,45 760,45 760,230 785,230 785,300 670,300" />
+        <polygon class="building-area" data-id="CenterVocal" points="670,230 750,230 750,55 230,55 230,45 760,45 760,230 785,230 785,300 760,300 760,485 680,485 680,520 600,520 600,440 680,440 680,475 750,475 750,300 670,300" />
         <polygon class="building-area" data-id="RightVocal" points="1010,430 1090,430 1090,520 1010,520 1010,480 925,480 925,55 230,55 230,45 935,45 935,470 1010,470" />
-        <polygon class="building-area" data-id="LeftVocal" points="670,230 750,230 750,55 230,55 230,45 760,45 760,230 785,230 785,300 670,300" />
+        <polygon class="building-area" data-id="LeftVocal" points="280,430 200,430 200,520 280,520 280,480 320,480 320,45 230,45 230,55 310,55 310,470 280,470" />
+        <polygon class="building-area" data-id="Keyboard" points="330,290 440,290 440,45 230,45 230,55 430,55 430,190 330,190" />
+        <polygon class="building-area" data-id="Bass" points="200,200 230,200 230,100 240,100 240,200 300,200 300,300 200,300" />
+        <polygon class="building-area" data-id="Hub" points="180,50 270,50 270,110 180,110" />
 
       </svg>
 
@@ -200,7 +203,11 @@
       JC: { title: "ジャズコーラス", desc: "ギターアンプのジャズコーラスです。ケーブルは後ろのLINEOUTのLとRに刺します", image: "JC.jpg"},
       CenterVocal: { title: "中Vo.", desc: "中Vo.です。ワイヤレスなのでケーブルは受信機に刺します"},
       RightVocal: { title: "上Vo.", desc: "上Vo.です。観客から見て右手のマイクです"},
-      LeftVocal: { title: "下Vo.", desc: "下Vo.です。観客から見て左手のマイクです"}
+      LeftVocal: { title: "下Vo.", desc: "下Vo.です。観客から見て左手のマイクです"},
+      Keyboard: { title: "キーボードDI", desc: "キーボードのためのDIです。LとRと2つあります。"},
+      Bass: { title: "ベーアン", desc: "ベースアンプです。ケーブルは背面の端子に直接刺します。"},
+      Hub: { title: "たこ", desc: "すべてのキャノンケーブルが集まってくるところです。それぞれケーブルに付いているタグの番号の穴に刺してください。"}
+
     };
 
     const infoSheet = document.getElementById('infoSheet');
