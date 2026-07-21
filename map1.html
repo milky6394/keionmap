@@ -152,10 +152,12 @@
 
       <!-- ② SVG判定 -->
       <svg class="map-svg" viewBox="0 0 1280 720">
-        <!-- 建物1 (座標例) -->
-        <polygon class="building-area" data-id="marshall" points="955,230 1015,230 1015,50 1025,50 1025,230 1080,230 1080,300 955,300" />
-        <!-- 建物2 (座標例) -->
-        <rect class="building-area" data-id="JC" x="200" y="600" width="300" height="250" rx="15" />
+        <polygon class="building-area" data-id="marshall" points="955,230 1015,230 1015,55 230,55 230,45 1025,45 1025,230 1080,230 1080,300 955,300" />
+        <polygon class="building-area" data-id="JC" points="785,230 835,230 835,55 230,55 230,45 845,45 845,230 895,230 895,300 785,300" />
+        <polygon class="building-area" data-id="CenterVocal" points="670,230 750,230 750,55 230,55 230,45 760,45 760,230 785,230 785,300 670,300" />
+        <polygon class="building-area" data-id="RightVocal" points="1010,430 1090,430 1090,520 1010,520 1010,480 925,480 925,55 230,55 230,45 935,45 935,470 1010,470" />
+        <polygon class="building-area" data-id="LeftVocal" points="670,230 750,230 750,55 230,55 230,45 760,45 760,230 785,230 785,300 670,300" />
+
       </svg>
 
     </div>
@@ -194,8 +196,11 @@
 
     // 建物の説明データ
     const buildingData = {
-      marshall: { title: "マーシャル", desc: "ギターアンプのマーシャルです", image: "marshall.jpg"},
-      JC: { title: "ジャズコーラス", desc: "ギターアンプのジャズコーラスです", image: "JC.jpg"}
+      marshall: { title: "マーシャル", desc: "ギターアンプのマーシャルです。音はマイクで録るのでケーブルはマイクに刺します", image: "marshall.jpg"},
+      JC: { title: "ジャズコーラス", desc: "ギターアンプのジャズコーラスです。ケーブルは後ろのLINEOUTのLとRに刺します", image: "JC.jpg"},
+      CenterVocal: { title: "中Vo.", desc: "中Vo.です。ワイヤレスなのでケーブルは受信機に刺します"},
+      RightVocal: { title: "上Vo.", desc: "上Vo.です。観客から見て右手のマイクです"},
+      LeftVocal: { title: "下Vo.", desc: "下Vo.です。観客から見て左手のマイクです"}
     };
 
     const infoSheet = document.getElementById('infoSheet');
