@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>タウンマップ</title>
+  <title>軽音セッティング図</title>
   <!-- スマホの指操作（パン・ズーム）を快適にするライブラリ -->
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <style>
@@ -164,6 +164,11 @@
         <polygon class="building-area" data-id="RightHighSP" points="1115,560 1215,560 1215,630 1115,630 1115,590 1105,590 1105,640 240,640 240,550 155,550 155,265 110,265 110,255 170,255 170,540 255,540 255,630 1090,630 1090,580 1115,580" />
         <polygon class="building-area" data-id="LeftLowSP" points="100,660 130,650 130,520 160,520 160,265 110,265 110,250 170,250 170,535 140,535 140,645 190,640 205,710 115,730" />
         <polygon class="building-area" data-id="RightLowSP" points="1210,640 1210,630 255,630 255,540 170,540 170,250 110,250 110,265 160,265 160,550 240,550 240,640 1165,635 1150,715 1235,730 1250,650" />
+        <polygon class="building-area" data-id="BassBack" points="280,530 370,570 340,640 250,600 265,575 240,575 240,550 155,550 155,265 110,265 110,255 170,255 170,540 255,540 255,560 265,560" />
+        <polygon class="building-area" data-id="KeyboardBack" points="450,570 540,530 560,560 730,560 730,575 565,575 570,600 480,640" />
+        <polygon class="building-area" data-id="VocalBack" points="740,530 830,570 800,640 710,600 710,640 240,640 240,550 155,550 155,265 110,265 110,255 170,255 170,540 255,540 255,630 690,630 690,575 720,575" />
+        <polygon class="building-area" data-id="GuitarBack" points="925,570 1015,530 1045,600 955,640 930,590 925,590 925,640 240,640 240,550 155,550 155,265 110,265 110,255 170,255 170,540 255,540 255,630 915,630 915,570" />
+        <polygon class="building-area" data-id="DrumBack" points="650,100 690,100 690,45 165,45 165,265 110,265 110,255 155,255 155,35 700,35 700,100 740,100 740,170 650,170" />
 
       </svg>
 
@@ -214,7 +219,12 @@
       LeftHighSP: { title: "下手 中高音スピーカー", desc: "下手の中高音スピーカーです。PA卓から近いので中高音 短のケーブルで繋ぎます"},
       RightHighSP: { title: "上手 中高音スピーカー", desc: "上手の中高音スピーカーです。PA卓から遠いので中高音 長のケーブルで繋ぎます"},
       LeftLowSP: { title: "下手 低音スピーカー", desc: "下手の低音スピーカーです。PA卓から近いので低音 短のケーブルで繋ぎます"},
-      RightLowSP: { title: "上手 低音スピーカー", desc: "上手の低音スピーカーです。PA卓から遠いので低音 長のケーブルで繋ぎます"}
+      RightLowSP: { title: "上手 低音スピーカー", desc: "上手の低音スピーカーです。PA卓から遠いので低音 長のケーブルで繋ぎます"},
+      BassBack: { title: "ベース返し", desc: "ベースの返しです。"},
+      KeyboardBack: { title: "キーボード返し", desc: "キーボードの返しです。この返しだけスピコンは繋がずにボーカル返しとシールドで接続します"},
+      VocalBack: { title: "ボーカル返し", desc: "ボーカルの返しです。キーボード返しもこれに繋ぎます。"},
+      GuitarBack: { title: "ギター返し", desc: "ギターの返しです。"},
+      DrumBack: { title: "ドラム返し", desc: "ドラムの返しです。"}
 
     };
 
