@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部内認証システム</title>
+  <title>部内認証・管理システム</title>
   <style>
     body {
       font-family: sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
+      align-items: flex-start;
+      padding: 2rem 0;
+      min-height: 100vh;
       margin: 0;
       background-color: #f4f4f9;
     }
@@ -19,16 +20,25 @@
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      width: 300px;
+      width: 360px;
     }
-    .hidden {
-      display: none;
+    .hidden { display: none; }
+    .form-group {
+      margin-bottom: 12px;
     }
-    input {
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #333;
+    }
+    input, select {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 8px;
       box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     button {
       width: 100%;
@@ -38,22 +48,25 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .message {
-      margin-top: 15px;
+      margin-top: 10px;
       font-weight: bold;
     }
+    button:hover { background-color: #0056b3; }
+    .message { margin-top: 15px; font-weight: bold; }
     .error { color: red; }
-    .success { color: green; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <!-- STEP 1: 共通パスワード入力画面 -->
+    <!-- STEP 1: 共通パスワード認証 -->
     <div id="step-password">
       <h2>部内ログイン</h2>
       <p>共通パスワードを入力してください</p>
@@ -62,23 +75,107 @@
       <div id="msg-password" class="message error"></div>
     </div>
 
-    <!-- STEP 2: 名前入力画面（初期表示は非表示） -->
+    <!-- STEP 2: 名前入力 -->
     <div id="step-name" class="hidden">
       <h2>名前を入力</h2>
-      <p>あなたの名前（ID）を入力してください</p>
+      <p>あなたの名前を入力してください</p>
       <input type="text" id="username-input" placeholder="例: 山田太郎">
-      <button id="check-member-btn">入室する</button>
-      <div id="msg-name" class="message"></div>
+      <button id="check-member-btn">進む</button>
+      <div id="msg-name" class="message error"></div>
     </div>
 
-    <!-- STEP 3: 完了画面（ログイン・登録成功時） -->
+    <!-- STEP 3: 新規部員プロフィール入力 -->
+    <div id="step-register" class="hidden">
+      <h2>新規部員登録</h2>
+      <p><b id="display-new-name"></b> さんの詳細情報を入力してください</p>
+
+      <div class="form-group">
+        <label>学年</label>
+        <select id="grade-select">
+          <option value="1">1年</option>
+          <option value="2">2年</option>
+          <option value="3">3年</option>
+          <option value="4">4年</option>
+          <option value="5">5年</option>
+        </select>
+      </div>
+
+      <!-- 1・2年生のみ表示されるクラス入力欄 -->
+      <div class="form-group" id="class-group">
+        <label>クラス</label>
+        <input type="text" id="class-input" placeholder="例: 1組">
+      </div>
+
+      <div class="form-group">
+        <label>学科</label>
+        <select id="course-select">
+          <option value="M">機械</option>
+          <option value="E">電気</option>
+          <option value="S">制御</option>
+          <option value="C">建設</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>学籍番号</label>
+        <input type="text" id="number-input" placeholder="例: 230101">
+      </div>
+
+      <div class="form-group">
+        <label>性別</label>
+        <select id="gender-select">
+          <option value="男性">男性</option>
+          <option value="女性">女性</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>居住形態</label>
+        <select id="dormitory-select">
+          <option value="false">通生</option>
+          <option value="true">寮生</option>
+        </select>
+      </div>
+
+      <!-- 寮生のみ表示されるオプション -->
+      <div id="dorm-options" class="hidden">
+        <div class="form-group">
+          <label>部屋番号</label>
+          <!-- text型 + patternで矢印を削除 -->
+          <input type="text" pattern="\d*" id="room-input" placeholder="例: 6213">
+        </div>
+        <div class="form-group">
+          <label>部屋タイプ</label>
+          <select id="single-select">
+            <option value="false">二人部屋</option>
+            <option value="true">一人部屋</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>LINEの名前</label>
+        <input type="text" id="line-input" placeholder="LINEの表示名">
+      </div>
+
+      <div class="form-group">
+        <label>兼部先 (なければ「なし」)</label>
+        <input type="text" id="multi-input" placeholder="例: サッカー部" value="なし">
+      </div>
+
+      <button id="register-btn">登録を完了して入室</button>
+      <div id="msg-register" class="message error"></div>
+    </div>
+
+    <!-- STEP 4: 完了画面 -->
     <div id="step-complete" class="hidden">
       <h2 id="welcome-title">ようこそ！</h2>
       <p id="welcome-msg"></p>
+      <div id="user-info-box"></div>
     </div>
   </div>
 
-  <!-- JavaScriptファイルの読み込み -->
   <script src="app.js"></script>
 </body>
 </html>
