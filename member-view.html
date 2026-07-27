@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部員名簿閲覧 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card member-view-card">
+    <h2>🔍 部員名簿閲覧</h2>
+    <p class="subtitle">部員情報の検索・絞り込みができます</p>
+
+    <!-- 検索・フィルターエリア -->
+    <div class="filter-box">
+      <div class="form-group">
+        <input type="text" id="search-name" placeholder="名前で検索（例: 山田）">
+      </div>
+      <div class="filter-row">
+        <select id="filter-grade">
+          <option value="">全学年</option>
+          <option value="1">1年</option>
+          <option value="2">2年</option>
+          <option value="3">3年</option>
+          <option value="4">4年</option>
+          <option value="5">5年</option>
+        </select>
+        <select id="filter-course">
+          <option value="">全学科</option>
+          <option value="M">機械 (M)</option>
+          <option value="E">電気 (E)</option>
+          <option value="S">制御 (S)</option>
+          <option value="C">建設 (C)</option>
+        </select>
+        <select id="filter-instrument">
+          <option value="">全パート</option>
+          <option value="Vo">ボーカル (Vo)</option>
+          <option value="Gt">ギター (Gt)</option>
+          <option value="Ba">ベース (Ba)</option>
+          <option value="Dr">ドラム (Dr)</option>
+          <option value="Key">キーボード (Key)</option>
+          <option value="Other">その他</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 部員件数カウント -->
+    <div class="member-count">該当者: <span id="count-number">0</span> 名</div>
+
+    <!-- 部員一覧表示エリア -->
+    <div id="member-list" class="member-list">
+      <p class="loading-msg">部員データを読み込み中...</p>
+    </div>
+
+    <hr class="divider">
+    <a href="members.html"><button class="btn-secondary">部員名簿メニューへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/member-view.js"></script>
+</body>
+</html>

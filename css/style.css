@@ -292,3 +292,96 @@ button:hover { background-color: #0056b3; }
 .member-menu-item.danger .menu-title {
   color: #991b1b;
 }
+
+/* ----------------------------------
+ * 部員閲覧ページ用スタイル (member-view.html)
+ * ---------------------------------- */
+.member-view-card {
+  width: 520px;
+  max-width: 92vw;
+}
+
+.filter-box {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.member-count {
+  font-size: 0.85rem;
+  color: #495057;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.member-list {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+/* 部員個別カード */
+.member-item-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #edf2f7;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.member-name {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+.member-badge {
+  font-size: 0.8rem;
+  background-color: #e2e8f0;
+  color: #4a5568;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.member-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #4a5568;
+  text-align: left;
+}
+
+.member-details .full-row {
+  grid-column: span 2;
+}
+
+.loading-msg, .no-data {
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+  padding: 20px 0;
+}
