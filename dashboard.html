@@ -8,13 +8,55 @@
 </head>
 <body>
 
-  <div class="card">
-    <h2 id="welcome-title">ようこそ！</h2>
-    <p>ログイン中のプロフィール情報です</p>
-    
-    <div id="user-info-box"></div>
+  <div class="card dashboard-card">
+    <div class="header-action">
+      <h2 id="welcome-title">ようこそ！</h2>
+      <button id="logout-btn" class="btn-secondary btn-sm">ログアウト</button>
+    </div>
 
-    <button id="logout-btn" class="btn-secondary">ログアウト</button>
+    <!-- マイプロフィールアコーディオン / 簡易表示 -->
+    <details class="user-profile-toggle">
+      <summary>自分のプロフィールを確認</summary>
+      <div id="user-info-box"></div>
+    </details>
+
+    <hr class="divider">
+
+    <h3>メインメニュー</h3>
+    
+    <!-- 各機能への遷移メニュー -->
+    <div class="menu-grid">
+      <a href="members.html" class="menu-card">
+        <span class="menu-icon">👥</span>
+        <span class="menu-title">部員名簿</span>
+        <span class="menu-desc">部員一覧・検索</span>
+      </a>
+
+      <a href="bands.html" class="menu-card">
+        <span class="menu-icon">🎸</span>
+        <span class="menu-title">バンド管理</span>
+        <span class="menu-desc">所属・結成・担当楽器</span>
+      </a>
+
+      <a href="practice.html" class="menu-card">
+        <span class="menu-icon">📅</span>
+        <span class="menu-title">練習希望登録</span>
+        <span class="menu-desc">スタジオ利用希望の提出</span>
+      </a>
+
+      <a href="stage.html" class="menu-card">
+        <span class="menu-icon">📐</span>
+        <span class="menu-title">設営図</span>
+        <span class="menu-desc">ライブ機材・配置図</span>
+      </a>
+
+      <a href="export.html" class="menu-card highlight">
+        <span class="menu-icon">📊</span>
+        <span class="menu-title">Excel出力</span>
+        <span class="menu-desc">名簿・スケジュールの出力</span>
+      </a>
+    </div>
+
   </div>
 
   <script src="js/config.js"></script>
