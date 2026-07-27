@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登録内容の変更 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card members-card">
+    <h2>✏️ 登録内容の変更</h2>
+    <p class="subtitle"><b id="display-username"></b> さんの登録情報を編集します</p>
+
+    <div class="form-group">
+      <label>学年</label>
+      <select id="edit-grade-select">
+        <option value="1">1年</option>
+        <option value="2">2年</option>
+        <option value="3">3年</option>
+        <option value="4">4年</option>
+        <option value="5">5年</option>
+      </select>
+    </div>
+
+    <!-- 1・2年生のみ表示されるクラス入力欄 -->
+    <div class="form-group" id="edit-class-group">
+      <label>クラス</label>
+      <input type="text" id="edit-class-input" placeholder="例: 1組">
+    </div>
+
+    <div class="form-group">
+      <label>学科</label>
+      <select id="edit-course-select">
+        <option value="M">機械</option>
+        <option value="E">電気</option>
+        <option value="S">制御</option>
+        <option value="C">建設</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>学籍番号</label>
+      <input type="text" id="edit-number-input" placeholder="例: 230101">
+    </div>
+
+    <div class="form-group">
+      <label>性別</label>
+      <select id="edit-gender-select">
+        <option value="男性">男性</option>
+        <option value="女性">女性</option>
+        <option value="その他">その他</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>居住形態</label>
+      <select id="edit-dormitory-select">
+        <option value="false">通生</option>
+        <option value="true">寮生</option>
+      </select>
+    </div>
+
+    <!-- 寮生のみ表示されるオプション -->
+    <div id="edit-dorm-options" class="hidden">
+      <div class="form-group">
+        <label>部屋番号</label>
+        <input type="text" pattern="\d*" id="edit-room-input" placeholder="例: 6213">
+      </div>
+      <div class="form-group">
+        <label>部屋タイプ</label>
+        <select id="edit-single-select">
+          <option value="false">二人部屋</option>
+          <option value="true">一人部屋</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>LINEの名前</label>
+      <input type="text" id="edit-line-input" placeholder="LINEの表示名">
+    </div>
+
+    <div class="form-group">
+      <label>兼部先 (なければ「なし」)</label>
+      <input type="text" id="edit-multi-input" placeholder="例: サッカー部">
+    </div>
+
+    <button id="save-edit-btn">変更内容を保存</button>
+    <div id="msg-edit" class="message error"></div>
+
+    <hr class="divider">
+    <a href="members.html"><button class="btn-secondary">部員名簿メニューへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/member-edit.js"></script>
+</body>
+</html>
