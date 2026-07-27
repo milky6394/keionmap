@@ -3,14 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部員名簿 - 部内管理システム</title>
+  <title>軽音セッティング図 - 部内管理システム</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="card">
-    <h2>👥 部員名簿</h2>
-    <p>このページは現在開発中です。</p>
+
+  <div class="card stage-card">
+    <h2>軽音セッティング図</h2>
+    <p class="subtitle">確認したいステージのセッティングを選択してください</p>
+
+    <div class="stage-button-group">
+      <!-- それぞれのHTMLファイルへ遷移するボタン -->
+      <a href="map1.html" class="btn btn-stage btn-map">体育館ステージのセッティングを開く</a>
+      <a href="map2.html" class="btn btn-stage btn-info">高専祭野外ステージのセッティングを開く</a>
+      <a href="map3.html" class="btn btn-stage btn-setting">サマフェスT棟前のセッティングを開く</a>
+    </div>
+
+    <hr class="divider">
+
     <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
   </div>
+
+  <script>
+    // 未ログインアクセス防止用ガード
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('user')) {
+        alert('ログインしてください');
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>

@@ -154,3 +154,71 @@ button:hover { background-color: #0056b3; }
   text-align: left;
   margin-top: 15px;
 }
+
+/* ----------------------------------
+ * 設営図ページ用スタイル (stage.html)
+ * ---------------------------------- */
+.stage-card {
+  width: 400px;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.stage-card h2 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.stage-card .subtitle {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.stage-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* ボタン同士の間隔 */
+  margin-bottom: 10px;
+}
+
+/* 設営図専用のボタン共通スタイル */
+.btn-stage {
+  display: block;
+  padding: 16px 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, transform 0.1s;
+  box-sizing: border-box;
+}
+
+/* タップした時の凹むレスポンス */
+.btn-stage:active {
+  transform: scale(0.98);
+}
+
+/* 各ボタンの固有カラー */
+.btn-map {
+  background-color: #2ecc71;
+}
+.btn-map:hover {
+  background-color: #27ae60;
+}
+
+.btn-info {
+  background-color: #e67e22;
+}
+.btn-info:hover {
+  background-color: #d35400;
+}
+
+.btn-setting {
+  background-color: #9b59b6;
+}
+.btn-setting:hover {
+  background-color: #8e44ad;
+}
