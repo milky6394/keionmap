@@ -3,14 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部員名簿 - 部内管理システム</title>
+  <title>部員名簿管理 - 部内管理システム</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="card">
-    <h2>👥 部員名簿</h2>
-    <p>このページは現在開発中です。</p>
+
+  <div class="card members-card">
+    <div class="header-action">
+      <h2>👥 部員名簿管理</h2>
+    </div>
+    <p class="subtitle">実行したい操作を選択してください</p>
+
+    <!-- 名簿操作のメインメニュー -->
+    <div class="menu-stack">
+      <a href="member-view.html" class="menu-card member-menu-item">
+        <span class="menu-icon">🔍</span>
+        <div class="menu-text">
+          <span class="menu-title">部員名簿を閲覧する</span>
+          <span class="menu-desc">部員一覧の確認・検索・フィルタリング</span>
+        </div>
+      </a>
+
+      <a href="member-edit.html" class="menu-card member-menu-item">
+        <span class="menu-icon">✏️</span>
+        <div class="menu-text">
+          <span class="menu-title">登録内容を変更する</span>
+          <span class="menu-desc">自分のプロフィール（学年・学籍番号・LINE等）の修正</span>
+        </div>
+      </a>
+
+      <a href="member-delete.html" class="menu-card member-menu-item danger">
+        <span class="menu-icon">🗑️</span>
+        <div class="menu-text">
+          <span class="menu-title">アカウントを削除する (退部)</span>
+          <span class="menu-desc">部員名簿から自分のアカウント情報を完全に削除</span>
+        </div>
+      </a>
+    </div>
+
+    <hr class="divider">
+
     <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
   </div>
+
+  <script>
+    // 未ログインアクセス防止ガード
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('user')) {
+        alert('ログインしてください');
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>

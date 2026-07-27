@@ -222,3 +222,73 @@ button:hover { background-color: #0056b3; }
 .btn-setting:hover {
   background-color: #8e44ad;
 }
+
+/* ----------------------------------
+ * 部員名簿ページ用スタイル (members.html)
+ * ---------------------------------- */
+.members-card {
+  width: 440px;
+  max-width: 90vw;
+}
+
+.members-card .subtitle {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+/* 縦並びのメニューリスト */
+.menu-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.member-menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.member-menu-item .menu-icon {
+  font-size: 1.8rem;
+  margin-right: 14px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.member-menu-item .menu-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-menu-item .menu-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 2px;
+}
+
+.member-menu-item .menu-desc {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+/* アカウント削除（退部）用の危険色スタイル */
+.member-menu-item.danger {
+  border-color: #fecaca;
+  background-color: #fef2f2;
+}
+
+.member-menu-item.danger:hover {
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+.member-menu-item.danger .menu-title {
+  color: #991b1b;
+}
