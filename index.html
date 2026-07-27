@@ -3,65 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部内認証・管理システム</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 2rem 0;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #f4f4f9;
-    }
-    .card {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      width: 360px;
-    }
-    .hidden { display: none; }
-    .form-group {
-      margin-bottom: 12px;
-    }
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-bottom: 4px;
-      color: #333;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    button:hover { background-color: #0056b3; }
-    .message { margin-top: 15px; font-weight: bold; }
-    .error { color: red; }
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 0.9rem;
-      text-align: left;
-    }
-  </style>
+  <title>部内認証・管理システム - ログイン</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -100,7 +43,6 @@
         </select>
       </div>
 
-      <!-- 1・2年生のみ表示されるクラス入力欄 -->
       <div class="form-group" id="class-group">
         <label>クラス</label>
         <input type="text" id="class-input" placeholder="例: 1組">
@@ -138,11 +80,9 @@
         </select>
       </div>
 
-      <!-- 寮生のみ表示されるオプション -->
       <div id="dorm-options" class="hidden">
         <div class="form-group">
           <label>部屋番号</label>
-          <!-- text型 + patternで矢印を削除 -->
           <input type="text" pattern="\d*" id="room-input" placeholder="例: 6213">
         </div>
         <div class="form-group">
@@ -167,15 +107,9 @@
       <button id="register-btn">登録を完了して入室</button>
       <div id="msg-register" class="message error"></div>
     </div>
-
-    <!-- STEP 4: 完了画面 -->
-    <div id="step-complete" class="hidden">
-      <h2 id="welcome-title">ようこそ！</h2>
-      <p id="welcome-msg"></p>
-      <div id="user-info-box"></div>
-    </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
