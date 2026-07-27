@@ -1,21 +1,84 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>ログイン</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部内認証システム</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    .hidden {
+      display: none;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .error { color: red; }
+    .success { color: green; }
+  </style>
 </head>
 <body>
-    <h2>管理者ログイン</h2>
-    
-    <form id="loginForm">
-        <label for="password">パスワード：</label>
-        <input type="password" id="password" required>
-        <button type="submit">ログイン</button>
-    </form>
 
-    <p id="message"></p>
+  <div class="card">
+    <!-- STEP 1: 共通パスワード入力画面 -->
+    <div id="step-password">
+      <h2>部内ログイン</h2>
+      <p>共通パスワードを入力してください</p>
+      <input type="password" id="password-input" placeholder="パスワード">
+      <button id="verify-password-btn">次へ</button>
+      <div id="msg-password" class="message error"></div>
+    </div>
 
-    <!-- 処理用のJavaScriptを読み込む -->
-    <script src="app.js"></script>
+    <!-- STEP 2: 名前入力画面（初期表示は非表示） -->
+    <div id="step-name" class="hidden">
+      <h2>名前を入力</h2>
+      <p>あなたの名前（ID）を入力してください</p>
+      <input type="text" id="username-input" placeholder="例: 山田太郎">
+      <button id="check-member-btn">入室する</button>
+      <div id="msg-name" class="message"></div>
+    </div>
+
+    <!-- STEP 3: 完了画面（ログイン・登録成功時） -->
+    <div id="step-complete" class="hidden">
+      <h2 id="welcome-title">ようこそ！</h2>
+      <p id="welcome-msg"></p>
+    </div>
+  </div>
+
+  <!-- JavaScriptファイルの読み込み -->
+  <script src="app.js"></script>
 </body>
 </html>
