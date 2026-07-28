@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バンド情報の編集 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card members-card" style="max-width: 650px;">
+    <h2>✏️ バンド情報の編集</h2>
+    <p class="subtitle">編集するバンドを選択し、内容を変更してください</p>
+
+    <!-- バンド選択 -->
+    <div class="form-group">
+      <label>編集するバンドを選択</label>
+      <select id="select-band-to-edit" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc;">
+        <option value="">-- バンドを選択してください --</option>
+      </select>
+    </div>
+
+    <!-- 編集フォーム（バンド未選択時は非表示） -->
+    <div id="edit-form-area" style="display: none; margin-top: 20px;">
+      <hr class="divider" style="margin-bottom: 20px;">
+
+      <!-- バンド名入力 -->
+      <div class="form-group">
+        <label>バンド名</label>
+        <input type="text" id="band-name-input" placeholder="例: The Blue Hearts">
+      </div>
+
+      <!-- メンバー編集エリア -->
+      <div class="form-group">
+        <label>メンバー構成</label>
+        <div id="member-list">
+          <!-- 動的にメンバー行が挿入されます -->
+        </div>
+        <button type="button" id="add-member-row-btn" class="btn-secondary" style="margin-top: 10px;">＋ メンバーを追加</button>
+      </div>
+
+      <button id="save-band-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">更新内容を保存する</button>
+      <div id="msg-band" class="message error"></div>
+    </div>
+
+    <hr class="divider">
+    <a href="bands.html"><button class="btn-secondary" id="back-btn">バンド管理トップへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/band-edit.js"></script>
+</body>
+</html>
