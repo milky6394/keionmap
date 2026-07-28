@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>練習割り当て管理 - 軽音部管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card admin-result-card">
+    <div class="header-area">
+      <a href="practice.html" class="btn-back">← 戻る</a>
+      <h2 id="event-title">練習割り当て結果</h2>
+    </div>
+    <p class="subtitle" id="event-status-info">ステータス: 読み込み中...</p>
+
+    <!-- 操作用アクションバー -->
+    <div class="admin-actions-bar">
+      <button id="btn-calculate" class="btn-primary" onclick="runAutoAssignment()">
+        ⚡ 自動割り当てを実行する
+      </button>
+      <button id="btn-publish" onclick="publishAssignments()" class="btn-success" style="background-color: #28a745; color: white; font-weight: bold;">
+    🎉 この内容で割当を確定・公開する
+      </button>
+      <div class="status-badge" id="assignment-summary">未計算</div>
+    </div>
+
+    
+
+    <!-- ローディング表示 -->
+    <div id="loading" class="loading-spinner">割り当てデータを読み込んでいます...</div>
+
+    <!-- 結果グリッドエリア -->
+    <div id="result-container" style="display: none;">
+      <div id="weekday-grid-container">
+        <!-- JSで曜日ごとの割り当てカードが生成されます -->
+      </div>
+    </div>
+
+    <div id="error-message" class="error-msg" style="display: none;"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/admin-practice-result.js"></script>
+</body>
+</html>
