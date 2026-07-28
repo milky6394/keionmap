@@ -486,3 +486,375 @@ button:hover { background-color: #0056b3; }
   background-color: #dc2626;
   transform: translateY(-1px);
 }
+
+/* ----------------------------------
+ * イベント作成画面用スタイル (admin-event-create.html)
+ * ---------------------------------- */
+.event-create-card {
+  width: 680px;
+  max-width: 95vw;
+}
+
+.form-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #e9ecef;
+}
+
+.form-section h3 {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 140px;
+}
+
+.weekday-checkboxes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 6px 0;
+}
+
+.weekday-checkboxes label {
+  font-size: 0.9rem;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.slot-table-wrapper {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.slot-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.slot-table th, .slot-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.slot-table th {
+  background: #f1f3f5;
+  color: #495057;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.slot-table input {
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.btn-small-add {
+  background: none;
+  border: 1px dashed #6c757d;
+  color: #495057;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-small-add:hover {
+  background: #e9ecef;
+}
+
+.btn-danger-icon {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.empty-msg {
+  color: #adb5bd;
+  padding: 20px !important;
+}
+
+.required {
+  color: #e63946;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-secondary-link {
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+/* ----------------------------------
+ * 部員用希望提出画面 (practice-wish-submit.html)
+ * ---------------------------------- */
+.wish-submit-card {
+  width: 650px;
+  max-width: 95vw;
+  margin: 0 auto;
+}
+
+.header-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.btn-back {
+  text-decoration: none;
+  color: #495057;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #e9ecef;
+}
+
+.notice-box {
+  background: #eef6ff;
+  border-left: 4px solid #3b82f6;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+.notice-box ul {
+  margin: 6px 0 0 18px;
+  padding: 0;
+}
+
+.notice-box li {
+  margin-bottom: 4px;
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.badge-ng { background: #ffe3e3; color: #d6336c; }
+.badge-ok { background: #e6fcf5; color: #0ca678; }
+.badge-best { background: #fff9db; color: #f59f00; }
+
+.weekday-section {
+  margin-bottom: 24px;
+}
+
+.weekday-header {
+  font-size: 1.1rem;
+  color: #1e293b;
+  border-bottom: 2px solid #cbd5e1;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.slot-item-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.slot-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.slot-number {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.slot-time {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.wish-options {
+  display: flex;
+  gap: 8px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  user-select: none;
+  transition: all 0.2s ease;
+  background: #f8fafc;
+}
+
+.option-label input[type="radio"] {
+  display: none; /* ラジオボタンの丸ポチは隠してボタン全体で表現 */
+}
+
+/* 選択時のスタイリング */
+.option-label.opt-ng.selected {
+  background: #ffe3e3;
+  border-color: #f76707;
+  color: #d6336c;
+  font-weight: bold;
+}
+
+.option-label.opt-ok.selected {
+  background: #d3f9d8;
+  border-color: #2b8a3e;
+  color: #2b8a3e;
+  font-weight: bold;
+}
+
+.option-label.opt-best.selected {
+  background: #fff3bf;
+  border-color: #f59f00;
+  color: #e67700;
+  font-weight: bold;
+}
+
+.sticky-actions {
+  position: sticky;
+  bottom: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 割り当て管理カードのスタイル */
+.admin-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.status-badge {
+  font-weight: bold;
+  padding: 6px 12px;
+  background: #e9ecef;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.slot-item-card.assigned {
+  border-left: 5px solid #28a745;
+  background-color: #f4fbf7;
+}
+
+.slot-item-card.unassigned {
+  border-left: 5px solid #6c757d;
+  background-color: #f8f9fa;
+}
+
+.assignment-selector select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  font-size: 0.95rem;
+}
+
+/* --- 練習割り当て結果画面用スタイル --- */
+.my-band-badge {
+  background-color: #e7f5ff;
+  border: 2px solid #339af0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.my-band-title {
+  font-weight: bold;
+  color: #1971c2;
+  margin-bottom: 8px;
+}
+
+.slot-item-card.my-slot {
+  background-color: #e6fcf5;
+  border: 2px solid #20c997;
+}
+
+.slot-item-card.unassigned {
+  background-color: #f8f9fa;
+  opacity: 0.6;
+}
+
+.band-name-label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 6px;
+}
+
+.my-slot .band-name-label {
+  color: #0ca678;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-published {
+  background-color: #d3f9d8;
+  color: #2b8a3e;
+}
+
+.status-draft {
+  background-color: #fff3bf;
+  color: #f59f00;
+}

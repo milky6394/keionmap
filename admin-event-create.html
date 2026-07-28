@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>練習割り当てイベント作成 - 管理者専用</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card event-create-card">
+    <h2>🛠️ 練習割り当てイベント作成</h2>
+    <p class="subtitle">曜日ごとのコマ枠・提出締め切りを設定して練習希望募集を開始します</p>
+
+    <form id="event-create-form" onsubmit="handleCreateEvent(event)">
+      <!-- 1. 基本設定 -->
+      <div class="form-section">
+        <h3>1. 基本情報</h3>
+        <div class="form-group">
+          <label for="event-title">イベント名 <span class="required">*</span></label>
+          <input type="text" id="event-title" placeholder="例: 2026年度 前期定期練習割り当て" required>
+        </div>
+
+        <div class="form-group">
+          <label for="event-deadline">希望提出締め切り日時 <span class="required">*</span></label>
+          <input type="datetime-local" id="event-deadline" required>
+        </div>
+      </div>
+
+      <!-- 2. 曜日・コマ枠の設定 -->
+      <div class="form-section">
+        <h3>2. 曜日・コマ枠の設定</h3>
+        
+        <div class="form-group">
+          <label>対象とする曜日を選択</label>
+          <div class="weekday-checkboxes">
+            <label><input type="checkbox" value="1" checked> 月</label>
+            <label><input type="checkbox" value="2" checked> 火</label>
+            <label><input type="checkbox" value="3" checked> 水</label>
+            <label><input type="checkbox" value="4" checked> 木</label>
+            <label><input type="checkbox" value="5" checked> 金</label>
+            <label><input type="checkbox" value="6"> 土</label>
+            <label><input type="checkbox" value="0"> 日</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="slots-per-day">1日あたりのコマ数</label>
+            <input type="number" id="slots-per-day" min="1" max="10" value="4">
+          </div>
+          <div class="form-group">
+            <label for="slot-duration">1コマの時間(分)</label>
+            <input type="number" id="slot-duration" min="15" max="180" step="15" value="60">
+          </div>
+          <div class="form-group">
+            <label for="first-slot-start">1コマ目の開始時刻</label>
+            <input type="time" id="first-slot-start" value="10:00">
+          </div>
+        </div>
+
+        <button type="button" class="btn-secondary" onclick="generateSlotList()">⚡ 曜日別コマ枠を一括生成</button>
+      </div>
+
+      <!-- 3. 生成されたコマ枠の確認・調整 -->
+      <div class="form-section">
+        <h3>3. 作成されるコマ枠一覧 (<span id="slot-count">0</span>枠)</h3>
+        
+        <div class="slot-table-wrapper">
+          <table class="slot-table" id="slot-table">
+            <thead>
+              <tr>
+                <th>曜日</th>
+                <th>コマ</th>
+                <th>開始</th>
+                <th>終了</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="slot-table-body">
+              <tr>
+                <td colspan="5" class="empty-msg">「曜日別コマ枠を一括生成」ボタンを押すとプレビューが表示されます</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="error-message" class="error-msg" style="display: none;"></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" id="submit-btn">🚀 練習イベントを発行する</button>
+        <a href="practice.html" class="btn-secondary-link">キャンセル</a>
+      </div>
+    </form>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/admin-event-create.js"></script>
+</body>
+</html>
