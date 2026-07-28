@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>練習希望の提出 - 軽音部管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card wish-submit-card">
+    <div class="header-area">
+      <a href="practice.html" class="btn-back">← 戻る</a>
+      <h2 id="event-title">練習希望の提出</h2>
+    </div>
+    <p class="subtitle" id="event-deadline-info">締め切り: 読み込み中...</p>
+
+    <!-- 注意事項説明 -->
+    <div class="notice-box">
+      <p>💡 <strong>回答のルール:</strong></p>
+      <ul>
+        <li><span class="badge badge-ng">✕ 行けない</span> : 1人でも✕がいるとバンド練習枠として割り当てられません。</li>
+        <li><span class="badge badge-ok">◯ 行ける</span> : 練習に参加可能な枠です。</li>
+        <li><span class="badge badge-best">◎ ここがありがたい</span> : 優先して割り当ててほしい枠です。</li>
+      </ul>
+    </div>
+
+    <!-- ローディング表示 -->
+    <div id="loading" class="loading-spinner">コマ枠情報を読み込んでいます...</div>
+
+    <!-- 曜日ごとのコマ枠回答エリア -->
+    <form id="wish-submit-form" onsubmit="handleSubmitWishes(event)" style="display: none;">
+      
+      <div id="weekday-sections-container">
+        <!-- JSで曜日ごとのブロックが動的に生成されます -->
+      </div>
+
+      <div id="error-message" class="error-msg" style="display: none;"></div>
+
+      <div class="form-actions sticky-actions">
+        <button type="submit" class="btn-primary" id="submit-btn">💾 練習希望を送信・更新する</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/practice-submit.js"></script>
+</body>
+</html>
