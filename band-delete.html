@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バンド削除 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .danger-zone {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+    .band-preview-box {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 12px 0;
+    }
+    .btn-danger {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    .btn-danger:disabled {
+      background-color: #fca5a5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card members-card" style="max-width: 600px;">
+    <h2>🗑️ バンド削除</h2>
+    <p class="subtitle">削除したいバンドを選択してください</p>
+
+    <!-- バンド選択 -->
+    <div class="form-group">
+      <label>削除するバンド</label>
+      <select id="select-band-to-delete" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc;">
+        <option value="">-- バンドを選択してください --</option>
+      </select>
+    </div>
+
+    <!-- 削除確認プレビュー（未選択時は非表示） -->
+    <div id="delete-confirm-area" style="display: none;">
+      <div class="danger-zone">
+        <p style="color: #991b1b; font-weight: bold; margin: 0 0 8px 0;">⚠️ 以下のバンドを削除しますか？</p>
+        <p style="font-size: 0.85rem; color: #7f1d1d; margin: 0;">この操作は取り消せません。バンドおよび構成メンバーデータが削除されます。</p>
+
+        <div class="band-preview-box">
+          <p id="preview-band-name" style="font-weight: bold; font-size: 1.1rem; margin: 0 0 6px 0;"></p>
+          <p id="preview-members-text" style="font-size: 0.9rem; color: #4b5563; margin: 0;"></p>
+        </div>
+
+        <button id="delete-btn" class="btn-danger">このバンドを削除する</button>
+      </div>
+      <div id="msg-delete" class="message error" style="margin-top: 10px;"></div>
+    </div>
+
+    <hr class="divider">
+    <a href="bands.html"><button class="btn-secondary">バンド管理トップへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/band-delete.js"></script>
+</body>
+</html>
