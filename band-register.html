@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新しいバンドの登録 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card members-card" style="max-width: 650px;">
+    <h2>➕ 新しいバンドの登録</h2>
+    <p class="subtitle">バンド名とメンバー・担当パートを入力してください</p>
+
+    <!-- バンド名入力 -->
+    <div class="form-group">
+      <label>バンド名</label>
+      <input type="text" id="band-name-input" placeholder="例: The Blue Hearts">
+    </div>
+
+    <!-- メンバー追加エリア -->
+    <div class="form-group">
+      <label>メンバー構成</label>
+      <div id="member-list">
+        <!-- 動的にメンバー行が追加されます -->
+      </div>
+      <button type="button" id="add-member-row-btn" class="btn-secondary" style="margin-top: 10px;">＋ メンバーを追加</button>
+    </div>
+
+    <button id="save-band-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">バンドを登録する</button>
+    <div id="msg-band" class="message error"></div>
+
+    <hr class="divider">
+    <a href="bands.html"><button class="btn-secondary" id="back-btn">バンド管理トップへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/band-register.js"></script>
+</body>
+</html>

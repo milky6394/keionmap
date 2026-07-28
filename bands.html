@@ -3,14 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部員名簿 - 部内管理システム</title>
+  <title>バンド管理 - 部内管理システム</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="card">
-    <h2>👥 部員名簿</h2>
-    <p>このページは現在開発中です。</p>
+
+  <div class="card members-card">
+    <h2>🎸 バンド管理</h2>
+    <p class="subtitle">メニューを選択してください</p>
+
+    <div class="menu-group">
+      <!-- 1. 新しいバンドの登録 -->
+      <a href="band-register.html" class="menu-btn btn-primary">
+        <span class="icon">➕</span>
+        <span class="label">新しいバンドの登録</span>
+      </a>
+
+      <!-- 2. バンド登録表を閲覧する -->
+      <a href="band-view.html" class="menu-btn btn-primary">
+        <span class="icon">🔍</span>
+        <span class="label">バンド登録表を閲覧する</span>
+      </a>
+
+      <!-- 3. バンドの登録内容の変更 -->
+      <a href="band-edit.html" class="menu-btn btn-primary">
+        <span class="icon">✏️</span>
+        <span class="label">バンドの登録内容の変更</span>
+      </a>
+
+      <!-- 4. バンドを削除 -->
+      <a href="band-delete.html" class="menu-btn btn-danger-menu">
+        <span class="icon">🗑️</span>
+        <span class="label">バンドを削除</span>
+      </a>
+    </div>
+
+    <hr class="divider">
     <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
   </div>
+
 </body>
 </html>
