@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>練習割り当て結果 - 軽音部管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="event-title">練習日程 割り当て結果</h1>
+      <p id="event-status-info"></p>
+    </header>
+
+    <div id="loading" class="loading">データを読み込んでいます...</div>
+
+    <main id="assignment-container" style="display: none;">
+      <!-- 自分のバンドの割当サマリー -->
+      <div id="my-schedule-summary" class="my-band-badge" style="display: none;">
+        <div class="my-band-title">🎸 自分の所属バンドの練習予定</div>
+        <ul id="my-slot-list" style="margin: 0; padding-left: 20px;"></ul>
+      </div>
+
+      <!-- 全体スケジュール表示 -->
+      <h2>📅 全体スケジュール</h2>
+      <div id="weekday-grid-container"></div>
+
+      <div style="margin-top: 30px; text-align: center;">
+        <a href="practice.html" class="btn-secondary">希望入力画面へ戻る</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/practice-assignments.js"></script>
+</body>
+</html>
