@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バンド登録表 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .search-box {
+      margin-bottom: 20px;
+    }
+    .band-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+    .band-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f3f4f6;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .band-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #1f2937;
+      margin: 0;
+    }
+    .member-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .member-tag {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+    .part-badge {
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card members-card" style="max-width: 700px;">
+    <h2>🔍 バンド登録表</h2>
+    <p class="subtitle">登録されているバンドの一覧とメンバー情報です</p>
+
+    <!-- バンド・人名 検索窓 -->
+    <div class="form-group search-box">
+      <input type="text" id="search-input" placeholder="バンド名や部員名で絞り込み...">
+    </div>
+
+    <!-- バンド一覧表示エリア -->
+    <div id="band-list-container">
+      <p style="text-align: center; color: #6b7280;">読み込み中...</p>
+    </div>
+
+    <hr class="divider">
+    <a href="bands.html"><button class="btn-secondary">バンド管理トップへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/band-view.js"></script>
+</body>
+</html>
