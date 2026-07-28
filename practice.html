@@ -3,14 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>部員名簿 - 部内管理システム</title>
+  <title>練習希望管理 - 部内管理システム</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="card">
-    <h2>👥 部員名簿</h2>
-    <p>このページは現在開発中です。</p>
-    <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
+
+  <div class="card members-card">
+    <h2>📅 練習希望・割り当て管理</h2>
+    <p class="subtitle">練習日程の確認や練習希望の提出・メンバーの入力状況確認を行えます</p>
+
+    <!-- 部員名簿と同じ縦並びメニューリスト構造 -->
+    <div class="menu-stack">
+      <!-- 1. 現在の練習割り当てを見る -->
+      <a href="practice-assignments.html" class="menu-card member-menu-item">
+        <span class="menu-icon">🗓️</span>
+        <div class="menu-text">
+          <span class="menu-title">現在の練習割り当て</span>
+          <span class="menu-desc">決定したコマ割り・練習スケジュールを確認</span>
+        </div>
+      </a>
+
+      <!-- 2. 練習希望を出す -->
+      <a href="practice-submit.html" class="menu-card member-menu-item">
+        <span class="menu-icon">✏️</span>
+        <div class="menu-text">
+          <span class="menu-title">練習希望を出す</span>
+          <span class="menu-desc">参加可能な日時・コマの希望を提出・更新</span>
+        </div>
+      </a>
+
+      <!-- 3. バンドメンバーの練習希望を見る -->
+      <a href="practice-members.html" class="menu-card member-menu-item">
+        <span class="menu-icon">👥</span>
+        <div class="menu-text">
+          <span class="menu-title">メンバーの練習希望を見る</span>
+          <span class="menu-desc">バンドメンバーの希望提出状況や空き時間を一覧確認</span>
+        </div>
+      </a>
+    </div>
+
+    <hr class="divider">
+    <a href="dashboard.html"><button class="btn-secondary">メインメニューへ戻る</button></a>
   </div>
+
 </body>
 </html>
