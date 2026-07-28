@@ -385,3 +385,104 @@ button:hover { background-color: #0056b3; }
   font-size: 0.9rem;
   padding: 20px 0;
 }
+
+/* ----------------------------------
+ * 退部・削除画面用スタイル (member-delete.html)
+ * ---------------------------------- */
+.warning-box {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.warning-box p {
+  margin: 0 0 4px 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* 危険操作用の赤ボタン */
+.btn-danger {
+  width: 100%;
+  padding: 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-danger:disabled {
+  background-color: #fca5a5;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------
+ * メニュー画面用スタイル (members.html / bands.html)
+ * ---------------------------------- */
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.menu-btn .icon {
+  font-size: 1.2rem;
+}
+
+/* メイン操作ボタン（青〜緑系） */
+.menu-btn.btn-primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.menu-btn.btn-primary:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* 削除操作ボタン（赤系） */
+.menu-btn.btn-danger-menu {
+  background-color: #ef4444;
+  color: white;
+}
+
+.menu-btn.btn-danger-menu:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}

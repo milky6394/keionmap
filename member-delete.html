@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アカウント削除 (退部) - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card members-card">
+    <h2>🗑️ アカウント削除 (退部)</h2>
+    <p class="subtitle"><b id="display-username"></b> さんのアカウントを削除します</p>
+
+    <!-- 注意事項のアラート表示 -->
+    <div class="warning-box">
+      <p><b>⚠️ 注意事項</b></p>
+      <p>アカウントを削除すると部員名簿から完全にデータが消去され、元に戻すことはできません。</p>
+    </div>
+
+    <!-- パスワード入力 -->
+    <div class="form-group">
+      <label>確認用共通パスワード</label>
+      <input type="password" id="delete-password-input" placeholder="共通パスワードを入力">
+    </div>
+
+    <!-- 削除同意チェックボックス -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input type="checkbox" id="delete-confirm-check">
+        注意事項を理解した上で退部します
+      </label>
+    </div>
+
+    <button id="delete-account-btn" class="btn-danger" disabled>アカウントを削除して退部する</button>
+    <div id="msg-delete" class="message error"></div>
+
+    <hr class="divider">
+    <a href="members.html"><button class="btn-secondary" id="back-btn">部員名簿メニューへ戻る</button></a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/member-delete.js"></script>
+</body>
+</html>
