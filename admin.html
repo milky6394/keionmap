@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者専用ダッシュボード | 部活管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 🔒 合言葉（パスワード）入力モーダル -->
+  <div id="auth-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>🔐 管理者認証</h2>
+      <p>このページにアクセスするには合言葉が必要です。</p>
+      
+      <form id="auth-form" onsubmit="verifyPasscode(event)">
+        <div class="form-group">
+          <input type="password" id="passcode-input" placeholder="合言葉を入力" required autofocus autocomplete="off">
+        </div>
+        <p id="auth-error" class="error-text" style="display: none; color: red;">合言葉が違います。</p>
+        <div class="modal-buttons">
+          <button type="submit" class="btn-primary">認証</button>
+          <a href="dashboard.html"><button class="btn-secondary">戻る</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🛡️ 管理者コンテンツ（認証成功後に表示） -->
+  <div id="admin-content" class="container" style="display: none;">
+    <header class="header">
+      <h1>⚙️ 管理者専用ダッシュボード</h1>
+      <p class="subtitle">部活の各種管理機能にアクセスできます。</p>
+    </header>
+
+    <main>
+      <div class="menu-grid">
+        <a href="admin-practice-result.html" class="menu-card highlight">
+          <span class="menu-icon">⚡</span>
+          <span class="menu-title">練習割当・調整</span>
+          <span class="menu-desc">自動計算と手動調整・確定</span>
+        </a>
+
+        <!-- 今後、ユーザー権限変更やデータ一括削除などのメニューをここに追加可能 -->
+      </div>
+
+      <div style="margin-top: 30px;">
+        <a href="dashboard.html"><button class="btn-secondary">← トップメニューに戻る</button></a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ログアウト処理
   document.getElementById('logout-btn').addEventListener('click', () => {
+    sessionStorage.clear(); // セッションストレージを完全に破棄
     sessionStorage.removeItem('user');
     window.location.href = 'index.html';
   });
