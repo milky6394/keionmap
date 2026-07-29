@@ -34,6 +34,21 @@ verifyPasswordBtn.addEventListener('click', verifyPassword);
 checkMemberBtn.addEventListener('click', checkMember);
 registerBtn.addEventListener('click', registerMember);
 
+passwordInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); // 予期せぬフォーム送信を防止
+    verifyPassword();
+  }
+});
+
+// 2. 名前入力欄で Enter キーを押した場合
+usernameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    checkMember();
+  }
+});
+
 gradeSelect.addEventListener('change', () => {
   const selectedGrade = gradeSelect.value;
   if (selectedGrade === '1' || selectedGrade === '2') {
