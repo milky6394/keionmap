@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  // 1. ログインユーザー情報の取得・ガード
+  const currentUserJson = sessionStorage.getItem('user');
+  if (!currentUserJson) {
+    alert('ログインしてください');
+    window.location.href = 'index.html';
+    return;
+  }
+  const currentUser = JSON.parse(currentUserJson);
+  // セッションの保持形式に合わせて username や name を取得
+  const currentUsername = currentUser.username || currentUser.name || currentUser;
+
   const selectBand = document.getElementById('select-band-to-delete');
   const confirmArea = document.getElementById('delete-confirm-area');
   const previewName = document.getElementById('preview-band-name');
@@ -16,10 +27,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (data.success) {
         allBands = data.bands;
-        let options = '<option value="">-- バンドを選択してください --</option>';
-        allBands.forEach(b => {
-          options += `<option value="${b.id}">${b.band_name}</option>`;
+
+        // ★ 自分がメンバーに含まれているバンドのみ抽出 ★
+        const myBands = allBands.filter(b => {
+          if (!b.members || !Array.isArray(b.members)) return false;
+          return b.members.some(m => (m.username || m.name || m.member_name) === currentUsername);
         });
+
+        let options = '<option value="">-- バンドを選択してください --</option>';
+
+        if (myBands.length === 0) {
+          options = '<option value="">削除できる所属バンドがありません</option>';
+        } else {
+          myBands.forEach(b => {
+            options += `<option value="${b.id}">${b.band_name}</option>`;
+          });
+        }
+
         selectBand.innerHTML = options;
       } else {
         alert(data.message);
@@ -44,7 +68,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       previewName.textContent = `🎸 ${selectedBand.band_name}`;
 
       if (selectedBand.members && selectedBand.members.length > 0) {
-        const memberNames = selectedBand.members.map(m => `${m.username} (${m.part.trim()})`).join(', ');
+        const memberNames = selectedBand.members.map(m => {
+          const name = m.username || m.name || '';
+          const part = (m.part || m.instrument || '').trim();
+          return `${name}${part ? ` (${part})` : ''}`;
+        }).join(', ');
         previewMembers.textContent = `メンバー: ${memberNames}`;
       } else {
         previewMembers.textContent = 'メンバー: (未登録)';

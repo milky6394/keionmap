@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  // 1. ログインユーザー情報の取得
+  const currentUserJson = sessionStorage.getItem('user');
+  if (!currentUserJson) {
+    alert('ログインしてください');
+    window.location.href = 'index.html';
+    return;
+  }
+  const currentUser = JSON.parse(currentUserJson);
+  // セッションの持たせ方に応じて `username` や `name` など適切なキーを使用
+  const currentUsername = currentUser.username || currentUser.name || currentUser;
+
   const selectBand = document.getElementById('select-band-to-edit');
   const editFormArea = document.getElementById('edit-form-area');
   const bandNameInput = document.getElementById('band-name-input');
@@ -22,12 +33,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bandData = await bandRes.json();
 
     if (memData.success) allMembers = memData.members;
+
     if (bandData.success) {
       allBands = bandData.bands;
-      let options = '<option value="">-- バンドを選択してください --</option>';
-      allBands.forEach(b => {
-        options += `<option value="${b.id}">${b.band_name}</option>`;
+
+      // ★ 自分がメンバーに含まれているバンドのみ抽出 ★
+      const myBands = allBands.filter(b => {
+        if (!b.members || !Array.isArray(b.members)) return false;
+        // メンバー配列内の username (または name) が自分と一致するか確認
+        return b.members.some(m => (m.username || m.name || m.member_name) === currentUsername);
       });
+
+      let options = '<option value="">-- バンドを選択してください --</option>';
+
+      if (myBands.length === 0) {
+        options = '<option value="">所属しているバンドがありません</option>';
+      } else {
+        myBands.forEach(b => {
+          options += `<option value="${b.id}">${b.band_name}</option>`;
+        });
+      }
+
       selectBand.innerHTML = options;
     }
   } catch (e) {
