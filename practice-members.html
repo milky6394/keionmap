@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メンバー希望状況確認 | 部活管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div style="margin-bottom: 10px;">
+<a href="practice.html"><button class="btn-secondary">戻る</button></a>
+      </div>
+      <h1>👥 バンドメンバー希望状況</h1>
+      <p class="subtitle">所属バンドのメンバーの練習希望状況を確認できます。</p>
+    </header>
+
+    <main>
+      <!-- バンド選択エリア -->
+      <div class="select-box" style="margin-bottom: 20px;">
+        <label for="band-select"><strong>表示するバンドを選択：</strong></label>
+        <select id="band-select" onchange="onBandChange(this.value)">
+          <option value="">-- バンドを選択してください --</option>
+        </select>
+      </div>
+
+      <!-- ローディング表示 -->
+      <div id="loading" class="loading-box" style="display: none;">
+        <p>メンバーの希望データを読み込み中...</p>
+      </div>
+
+      <!-- メンバー希望比較表 -->
+      <div id="members-wish-container" style="display: none;">
+        <div id="weekday-grid-container" class="weekday-container"></div>
+      </div>
+      <div style="margin-bottom: 10px;">
+<a href="practice.html"><button class="btn-secondary">戻る</button></a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/practice-members.js"></script>
+</body>
+</html>

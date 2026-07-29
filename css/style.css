@@ -858,3 +858,76 @@ button:hover { background-color: #0056b3; }
   background-color: #fff3bf;
   color: #f59f00;
 }
+
+  /* 全員参加可能なコマのハイライト */
+.slot-row.slot-all-ok {
+  border-left: 4px solid #28a745;
+  background-color: #f8fff9;
+}
+
+.all-ok-badge {
+  background-color: #28a745;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+
+/* メンバーごとの希望行 */
+.members-wish-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.member-wish-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f3f5;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.wish-tag.wish-2 { color: #d9534f; font-weight: bold; } /* 第一希望 */
+.wish-tag.wish-1 { color: #0275d8; }                   /* 参加可能 */
+.wish-tag.wish-0 { color: #6c757d; text-decoration: line-through; } /* 不可 */
+
+/* モーダルオーバーレイ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.admin-card {
+  border: 2px solid #ffc107;
+  background-color: #fffdf5;
+}

@@ -1,181 +1,132 @@
-const WEEKDAY_NAMES = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
+const WEEKDAY_NAMES = ["", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
 
-let activeEvent = null;
 let activeSlots = [];
-let currentAssignments = []; // [{ slot_id, band_id, band_name }]
-let myBandIds = []; // 自分が所属しているバンドのIDリスト
-let currentUsername = "";
+let currentAssignments = {}; // { slot_id: band_name }
+let myBands = []; // 自分が所属しているバンド名リスト
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1. ユーザー情報取得 (安全パース)
-  const rawUser = sessionStorage.getItem("user") || localStorage.getItem("username") || localStorage.getItem("user");
-  if (rawUser) {
-    try {
-      const parsed = JSON.parse(rawUser);
-      currentUsername = typeof parsed === "object" ? (parsed.username || parsed.name || "") : String(parsed);
-    } catch (e) {
-      currentUsername = String(rawUser);
-    }
-  }
-
-  await loadAssignmentsData();
+  await loadSchedule();
 });
 
-async function loadAssignmentsData() {
+async function loadSchedule() {
   const loading = document.getElementById("loading");
-  const container = document.getElementById("assignment-container");
+  const container = document.getElementById("schedule-container");
 
   try {
-    // 2. アクティブなイベント情報を取得
-    const eventRes = await fetch(`${BACKEND_URL}/api/get-active-event`);
-    const eventData = await eventRes.json();
-
-    if (!eventData.success || !eventData.event) {
-      loading.textContent = "現在確定している練習イベントはありません。";
-      return;
-    }
-
-    activeEvent = eventData.event;
-    activeSlots = eventData.slots || [];
-
-    document.getElementById("event-title").textContent = `${activeEvent.title} - 割り当て結果`;
-
-    // 未公開（調整中）の場合はメッセージ表示
-    if (activeEvent.status !== "published") {
-      loading.innerHTML = `
-        <div style="text-align: center; padding: 20px;">
-          <h3>🟡 現在日程を調整中です</h3>
-          <p>管理者による確定・公開までしばらくお待ちください。</p>
-          <a href="practice.html" class="btn-secondary" style="margin-top:10px; display:inline-block;">希望入力へ戻る</a>
-        </div>
-      `;
-      return;
-    }
-
-    // 3. 自分の所属バンドを取得（エラーが起きても全体描画を止めない）
-    if (currentUsername) {
+    // 1. ログインユーザー情報の取得（自バンド強調用）
+    const rawUser = sessionStorage.getItem("user") || localStorage.getItem("username") || localStorage.getItem("user");
+    let currentUsername = "";
+    if (rawUser) {
       try {
-        const bandsRes = await fetch(`${BACKEND_URL}/api/get-bands`);
-        const bandsData = await bandsRes.json();
-        if (bandsData.success && bandsData.bands) {
-          const targetUser = currentUsername.trim();
-          // .strip() を .trim() に修正
-          myBandIds = bandsData.bands
-            .filter(b => b.members && b.members.some(m => String(m.username || m.name || '').trim() === targetUser))
-            .map(b => Number(b.id));
-        }
+        const parsed = JSON.parse(rawUser);
+        currentUsername = typeof parsed === "object" ? (parsed.username || parsed.name || "") : String(parsed);
       } catch (e) {
-        console.warn("所属バンド取得エラー（全体表示は続行します）:", e);
+        currentUsername = String(rawUser);
       }
     }
 
-    // 4. 割当結果を取得
-    const assignRes = await fetch(`${BACKEND_URL}/api/get-assignments/${activeEvent.id}`);
-    const assignData = await assignRes.json();
-console.log("取得した割り当てデータ:", assignData);
-console.log("取得した自分のバンドID:", myBandIds);
-    if (assignData.success && assignData.assignments) {
-      currentAssignments = assignData.assignments;
+    // 2. 自分が所属するバンド一覧の取得（ログイン中の場合）
+    if (currentUsername) {
+      try {
+        const myBandRes = await fetch(`${BACKEND_URL}/api/get-user-bands/${encodeURIComponent(currentUsername)}`);
+        const myBandData = await myBandRes.json();
+        if (myBandData.success) {
+          myBands = (myBandData.bands || []).map(b => b.band_name);
+        }
+      } catch (e) {
+        console.warn("自バンドの取得に失敗しました:", e);
+      }
     }
 
-    // 5. 画面描画
-    renderMySummary();
-    renderGrid();
+    // 3. 常設コマ枠を取得 (20コマ)
+    const slotRes = await fetch(`${BACKEND_URL}/api/get-practice-slots`);
+    const slotData = await slotRes.json();
+    if (!slotData.success) {
+      loading.textContent = "コマ枠データの取得に失敗しました。";
+      return;
+    }
+    activeSlots = slotData.slots || [];
+
+    // 4. 確定した割り当てデータを取得
+    const assignRes = await fetch(`${BACKEND_URL}/api/get-assignments`);
+    const assignData = await assignRes.json();
+
+    currentAssignments = {};
+    if (assignData.success && assignData.assignments) {
+      assignData.assignments.forEach(a => {
+        if (a.band_name) {
+          currentAssignments[String(a.slot_id)] = a.band_name;
+        }
+      });
+    }
+
+    // 5. グリッド描画
+    renderScheduleGrid();
 
     loading.style.display = "none";
     container.style.display = "block";
 
   } catch (err) {
-    console.error("データ読み込みエラー:", err);
-    loading.textContent = "通信エラーが発生しました。接続状況を確認してください。";
+    console.error(err);
+    loading.textContent = "通信エラーが発生しました。バックエンドの起動を確認してください。";
   }
 }
 
-// 自分のバンドの割当サマリーを描画
-function renderMySummary() {
-  const summaryBox = document.getElementById("my-schedule-summary");
-  const myList = document.getElementById("my-slot-list");
-  myList.innerHTML = "";
-
-  if (myBandIds.length === 0) return;
-
-  // 自分のバンドが割り当てられているコマを抽出
-  const myAssignments = currentAssignments.filter(a => myBandIds.includes(Number(a.band_id)));
-
-  if (myAssignments.length === 0) {
-    myList.innerHTML = "<li>あなたの所属バンドの練習コマはありません。</li>";
-  } else {
-    myAssignments.forEach(a => {
-      const slot = activeSlots.find(s => Number(s.id) === Number(a.slot_id));
-      if (slot) {
-        const dayName = WEEKDAY_NAMES[slot.day_of_week];
-        const timeStr = `${slot.start_time.slice(0, 5)} - ${slot.end_time.slice(0, 5)}`;
-        myList.innerHTML += `
-          <li>
-            <strong>📅 ${dayName} 第${slot.slot_number}コマ (${timeStr})</strong> 
-            ： 🎸 <span>${a.band_name}</span>
-          </li>
-        `;
-      }
-    });
-  }
-
-  summaryBox.style.display = "block";
-}
-
-// 全体スケジュールのグリッド描画
-function renderGrid() {
+// 曜日ごとのスケジュールグリッドを描画
+function renderScheduleGrid() {
   const container = document.getElementById("weekday-grid-container");
   container.innerHTML = "";
 
-  // 曜日ごとのグループ化
   const slotsByDay = {};
   activeSlots.forEach(slot => {
-    if (!slotsByDay[slot.day_of_week]) {
-      slotsByDay[slot.day_of_week] = [];
-    }
+    if (!slotsByDay[slot.day_of_week]) slotsByDay[slot.day_of_week] = [];
     slotsByDay[slot.day_of_week].push(slot);
   });
 
-  const sortedDays = Object.keys(slotsByDay).sort((a, b) => {
-    const orderA = a == 0 ? 7 : parseInt(a);
-    const orderB = b == 0 ? 7 : parseInt(b);
-    return orderA - orderB;
-  });
-
-  sortedDays.forEach(dayInt => {
-    const daySlots = slotsByDay[dayInt];
+  [1, 2, 3, 4, 5].forEach(dayInt => {
+    const daySlots = slotsByDay[dayInt] || [];
     const dayName = WEEKDAY_NAMES[dayInt];
 
     const section = document.createElement("div");
-    section.className = "weekday-section";
+    section.className = "weekday-card";
 
     let slotsHtml = "";
     daySlots.forEach(slot => {
-      const assignment = currentAssignments.find(a => Number(a.slot_id) === Number(slot.id));
-      const bandName = assignment ? assignment.band_name : null;
-      const bandId = assignment ? Number(assignment.band_id) : null;
+      const assignedBandName = currentAssignments[String(slot.id)];
+      const startTime = slot.start_time ? slot.start_time.slice(0, 5) : "";
+      const endTime = slot.end_time ? slot.end_time.slice(0, 5) : "";
 
-      const isMySlot = bandId && myBandIds.includes(bandId);
+      // 自分の所属バンドかどうかの判定
+      const isMyBand = assignedBandName && myBands.includes(assignedBandName);
+
+      let bandBadgeHtml = "";
+      if (assignedBandName) {
+        bandBadgeHtml = `
+          <span class="assigned-band-badge ${isMyBand ? 'my-band' : ''}">
+            🎸 ${assignedBandName} ${isMyBand ? '★(自バンド)' : ''}
+          </span>
+        `;
+      } else {
+        bandBadgeHtml = `<span class="empty-slot-badge">-- 空きコマ --</span>`;
+      }
 
       slotsHtml += `
-        <div class="slot-item-card ${isMySlot ? 'my-slot' : (bandName ? '' : 'unassigned')}">
-          <div class="slot-info">
-            <span class="slot-number">第 ${slot.slot_number} コマ</span>
-            <span class="slot-time">${slot.start_time.slice(0, 5)} - ${slot.end_time.slice(0, 5)}</span>
+        <div class="slot-row ${isMyBand ? 'highlight-my-slot' : ''}">
+          <div class="slot-title">
+            <strong>第 ${slot.slot_number} コマ</strong>
+            <span class="slot-time">${startTime}〜${endTime}</span>
           </div>
-          <div class="band-name-label">
-            ${bandName ? `🎸 ${bandName} ${isMySlot ? '✨(自バンド)' : ''}` : '<span style="color:#adb5bd;">-- 練習なし --</span>'}
+          <div class="slot-assignment-display">
+            ${bandBadgeHtml}
           </div>
         </div>
       `;
     });
 
     section.innerHTML = `
-      <h3 class="weekday-header">📅 ${dayName}</h3>
-      <div class="slot-list-grid">${slotsHtml}</div>
+      <h3 class="weekday-title">📅 ${dayName}</h3>
+      <div class="slot-list">${slotsHtml}</div>
     `;
-
     container.appendChild(section);
   });
 }

@@ -3,31 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>練習割り当て結果 - 軽音部管理アプリ</title>
+  <title>確定練習割り当て | 部活管理システム</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1 id="event-title">練習日程 割り当て結果</h1>
-      <p id="event-status-info"></p>
+    <header class="header">
+      <div style="margin-bottom: 10px;">
+<a href="practice.html"><button class="btn-secondary">戻る</button></a>
+      </div>
+      <h1>🎸 現在の練習スケジュール</h1>
+      <p class="subtitle">今週の各コマの練習割り当て状況です。</p>
     </header>
 
-    <div id="loading" class="loading">データを読み込んでいます...</div>
-
-    <main id="assignment-container" style="display: none;">
-      <!-- 自分のバンドの割当サマリー -->
-      <div id="my-schedule-summary" class="my-band-badge" style="display: none;">
-        <div class="my-band-title">🎸 自分の所属バンドの練習予定</div>
-        <ul id="my-slot-list" style="margin: 0; padding-left: 20px;"></ul>
+    <main>
+      <!-- ローディング表示 -->
+      <div id="loading" class="loading-box">
+        <p>スケジュールを読み込み中...</p>
       </div>
 
-      <!-- 全体スケジュール表示 -->
-      <h2>📅 全体スケジュール</h2>
-      <div id="weekday-grid-container"></div>
-
-      <div style="margin-top: 30px; text-align: center;">
-        <a href="practice.html" class="btn-secondary">希望入力画面へ戻る</a>
+      <!-- 割当一覧エリア -->
+      <div id="schedule-container" style="display: none;">
+        <div id="weekday-grid-container" class="weekday-container"></div>
       </div>
     </main>
   </div>

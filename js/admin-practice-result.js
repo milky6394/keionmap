@@ -1,141 +1,100 @@
-const WEEKDAY_NAMES = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
+const WEEKDAY_NAMES = ["", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
 
-let activeEvent = null;
 let activeSlots = [];
 let allBands = [];
 let currentAssignments = {}; // { slot_id: band_id }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadEventAndAssignments();
+  await loadAdminData();
 });
 
-// 1. イベント・コマ枠・バンド・現在の割り当てデータを取得
-async function loadEventAndAssignments() {
+// コマ枠・バンド一覧・現在の割当を一括取得
+async function loadAdminData() {
   const loading = document.getElementById("loading");
   const container = document.getElementById("result-container");
 
   try {
-    // アクティブイベントの取得
-    const eventRes = await fetch(`${BACKEND_URL}/api/get-active-event`);
-    const eventData = await eventRes.json();
-
-    if (!eventData.success || !eventData.event) {
-      loading.textContent = "対象の練習イベントが見つかりません。";
+    // 1. 常設コマ枠を取得 (20コマ)
+    const slotRes = await fetch(`${BACKEND_URL}/api/get-practice-slots`);
+    const slotData = await slotRes.json();
+    if (!slotData.success) {
+      loading.textContent = "コマ枠データの取得に失敗しました。";
       return;
     }
+    activeSlots = slotData.slots || [];
 
-    activeEvent = eventData.event;
-    activeSlots = eventData.slots || [];
-
-    document.getElementById("event-title").textContent = `${activeEvent.title} - 割り当て管理`;
-    document.getElementById("event-status-info").textContent = `ステータス: ${
-      activeEvent.status === "published" ? "🟢 確定・公開中" : "🟡 調整中（未公開）"
-    }`;
-
-    // 全バンド一覧の取得（ドロップダウン用）
+    // 2. バンド一覧を取得
     const bandRes = await fetch(`${BACKEND_URL}/api/get-bands`);
     const bandData = await bandRes.json();
-    if (bandData.success) {
-      allBands = bandData.bands || [];
-    }
+    allBands = bandData.bands || [];
 
-    // 現在の割り当て結果を取得して描画
+    // 3. 現在の割当データを取得
     await fetchAssignments();
 
     loading.style.display = "none";
     container.style.display = "block";
-
   } catch (err) {
     console.error(err);
-    loading.textContent = "通信エラーが発生しました。";
+    loading.textContent = "通信エラーが発生しました。バックエンドの起動を確認してください。";
   }
-  // admin-practice-result.js の loadEventAndAssignments 内でステータスチェック
-if (activeEvent.status === "published") {
-  const btn = document.getElementById("btn-publish");
-  if (btn) {
-    btn.textContent = "✅ 確定済み";
-    btn.disabled = true;
-    btn.style.backgroundColor = "#6c757d";
-  }
-}
 }
 
-// 2. 割り当てデータ取得 API 呼び出し & データマップ作成
+// 割り当てデータ取得 & 再描画
 async function fetchAssignments() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/get-assignments/${activeEvent.id}`);
-    const data = await res.json();
+  const res = await fetch(`${BACKEND_URL}/api/get-assignments`);
+  const data = await res.json();
 
-    currentAssignments = {}; // マップのクリア
-
-    if (data.success && data.assignments && data.assignments.length > 0) {
-      data.assignments.forEach(a => {
-        // 数値・文字列どちらでも一致するように Number 型に揃えて保持
-        if (a.slot_id !== undefined && a.band_id !== undefined) {
-          currentAssignments[Number(a.slot_id)] = Number(a.band_id);
-        }
-      });
-      const count = Object.keys(currentAssignments).length;
-      document.getElementById("assignment-summary").textContent = `割り当て済み: ${count}コマ`;
-    } else {
-      document.getElementById("assignment-summary").textContent = "未計算";
-    }
-
-    // 最新状態にUIをレンダリング
-    renderGrid();
-  } catch (e) {
-    console.error("割り当てデータ取得エラー:", e);
+  currentAssignments = {};
+  if (data.success && data.assignments) {
+    data.assignments.forEach(a => {
+      if (a.band_id) {
+        currentAssignments[String(a.slot_id)] = String(a.band_id);
+      }
+    });
   }
+  renderGrid();
 }
 
-// 3. 曜日ごとの結果グリッドを描画
+// 曜日ごとの割当グリッドを描画
 function renderGrid() {
   const container = document.getElementById("weekday-grid-container");
   container.innerHTML = "";
 
   const slotsByDay = {};
   activeSlots.forEach(slot => {
-    if (!slotsByDay[slot.day_of_week]) {
-      slotsByDay[slot.day_of_week] = [];
-    }
+    if (!slotsByDay[slot.day_of_week]) slotsByDay[slot.day_of_week] = [];
     slotsByDay[slot.day_of_week].push(slot);
   });
 
-  const sortedDays = Object.keys(slotsByDay).sort((a, b) => {
-    const orderA = a == 0 ? 7 : parseInt(a);
-    const orderB = b == 0 ? 7 : parseInt(b);
-    return orderA - orderB;
-  });
-
-  sortedDays.forEach(dayInt => {
-    const daySlots = slotsByDay[dayInt];
+  [1, 2, 3, 4, 5].forEach(dayInt => {
+    const daySlots = slotsByDay[dayInt] || [];
     const dayName = WEEKDAY_NAMES[dayInt];
 
     const section = document.createElement("div");
-    section.className = "weekday-section";
+    section.className = "weekday-card";
 
     let slotsHtml = "";
     daySlots.forEach(slot => {
-      const assignedBandId = currentAssignments[Number(slot.id)];
+      const assignedBandId = currentAssignments[String(slot.id)];
 
       // バンド選択ドロップダウンの作成
       let bandOptionsHtml = `<option value="">-- 未割り当て --</option>`;
       allBands.forEach(b => {
-        // String 比較にすることで '1' と 1 の型の不一致を確実に防ぐ
         const isSelected = String(b.id) === String(assignedBandId) ? "selected" : "";
         bandOptionsHtml += `<option value="${b.id}" ${isSelected}>🎸 ${b.band_name}</option>`;
       });
 
-      const isAssigned = assignedBandId !== undefined && assignedBandId !== null;
+      const startTime = slot.start_time ? slot.start_time.slice(0, 5) : "";
+      const endTime = slot.end_time ? slot.end_time.slice(0, 5) : "";
 
       slotsHtml += `
-        <div id="slot-card-${slot.id}" class="slot-item-card ${isAssigned ? 'assigned' : 'unassigned'}">
-          <div class="slot-info">
-            <span class="slot-number">第 ${slot.slot_number} コマ</span>
-            <span class="slot-time">${slot.start_time.slice(0, 5)} - ${slot.end_time.slice(0, 5)}</span>
+        <div class="slot-row ${assignedBandId ? 'has-assignment' : ''}">
+          <div class="slot-title">
+            <strong>第 ${slot.slot_number} コマ</strong>
+            <span class="slot-time">${startTime}〜${endTime}</span>
           </div>
           <div class="assignment-selector">
-            <select onchange="handleManualAssignmentChange(${slot.id}, this.value)">
+            <select class="band-select" onchange="handleManualChange(${slot.id}, this.value)">
               ${bandOptionsHtml}
             </select>
           </div>
@@ -144,121 +103,66 @@ function renderGrid() {
     });
 
     section.innerHTML = `
-      <h3 class="weekday-header">📅 ${dayName}</h3>
-      <div class="slot-list-grid">${slotsHtml}</div>
+      <h3 class="weekday-title">📅 ${dayName}</h3>
+      <div class="slot-list">${slotsHtml}</div>
     `;
-
     container.appendChild(section);
   });
 }
 
-// 4. 自動割り当てボタン実行処理
-async function runAutoAssignment() {
+// ⚡ 「作成（自動割り当て実行）」ボタン処理
+async function runCreateAssignments() {
+  if (!confirm("現時点の練習希望データを元に割当を自動計算・更新しますか？\n（現在の手動変更内容は上書きされます）")) return;
+
   const btn = document.getElementById("btn-calculate");
-  const errorMsg = document.getElementById("error-message");
-  errorMsg.style.display = "none";
-
-  if (!confirm("自動割り当てを実行しますか？（現在の割り当ては上書きされます）")) {
-    return;
-  }
-
   btn.disabled = true;
-  btn.textContent = "⏳ 計算中...";
+  btn.textContent = "⏳ 割り当て作成中...";
 
   try {
-    const res = await fetch(`${BACKEND_URL}/api/admin/calculate-and-save-assignments/${activeEvent.id}`, {
+    const res = await fetch(`${BACKEND_URL}/api/admin/calculate-assignments`, {
       method: "POST"
     });
     const result = await res.json();
 
     if (result.success) {
-      alert(result.message);
-      
-      // POSTのレスポンス自体に割り当て結果が含まれている場合はそれを使って直接描画
-      if (result.assignments && result.assignments.length > 0) {
-        currentAssignments = {};
-        result.assignments.forEach(a => {
-          currentAssignments[Number(a.slot_id)] = Number(a.band_id);
-        });
-        const count = Object.keys(currentAssignments).length;
-        document.getElementById("assignment-summary").textContent = `割り当て済み: ${count}コマ`;
-        renderGrid();
-      } else {
-        // なければ GET で再取得
-        await fetchAssignments();
-      }
+      alert("割当の更新が完了しました！");
+      await fetchAssignments(); // 再読み込み
     } else {
-      errorMsg.textContent = result.message || "計算処理に失敗しました。";
-      errorMsg.style.display = "block";
-    }
-  } catch (err) {
-    console.error(err);
-    errorMsg.textContent = "通信エラーが発生しました。";
-    errorMsg.style.display = "block";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "⚡ 自動割り当てを実行する";
-  }
-}
-
-// 5. ドロップダウンで手動で割り当てを変更した場合の見た目更新
-function handleManualAssignmentChange(slotId, bandId) {
-  const cardElem = document.getElementById(`slot-card-${slotId}`);
-
-  if (bandId) {
-    currentAssignments[Number(slotId)] = Number(bandId);
-    if (cardElem) {
-      cardElem.classList.remove("unassigned");
-      cardElem.classList.add("assigned");
-    }
-  } else {
-    delete currentAssignments[Number(slotId)];
-    if (cardElem) {
-      cardElem.classList.remove("assigned");
-      cardElem.classList.add("unassigned");
-    }
-  }
-
-  // カウントサマリーの更新
-  const count = Object.keys(currentAssignments).length;
-  document.getElementById("assignment-summary").textContent = `割り当て済み: ${count}コマ`;
-}
-
-// 割り当ての確定・公開処理
-async function publishAssignments() {
-  if (!activeEvent) return;
-
-  const confirmMsg = "この内容で割り当てを確定・公開しますか？\n（確定すると部員が自分の練習コマを確認できるようになります）";
-  if (!confirm(confirmMsg)) {
-    return;
-  }
-
-  const btn = document.getElementById("btn-publish");
-  btn.disabled = true;
-  btn.textContent = "処理中...";
-
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/admin/publish-event/${activeEvent.id}`, {
-      method: "POST"
-    });
-    const result = await res.json();
-
-    if (result.success) {
-      alert(result.message);
-      // ステータス表示を更新
-      activeEvent.status = "published";
-      document.getElementById("event-status-info").textContent = "ステータス: 🟢 確定・公開中";
-      btn.textContent = "✅ 確定済み";
-      btn.style.backgroundColor = "#6c757d"; // グレーアウト
-    } else {
-      alert("エラー: " + result.message);
-      btn.disabled = false;
-      btn.textContent = "🎉 この内容で割当を確定・公開する";
+      alert(result.message || "割り当て作成に失敗しました。");
     }
   } catch (err) {
     console.error(err);
     alert("通信エラーが発生しました。");
+  } finally {
     btn.disabled = false;
-    btn.textContent = "🎉 この内容で割当を確定・公開する";
+    btn.textContent = "⚡ 現時点の希望から割当を作成・更新する";
+  }
+}
+
+// ✋ 手動で個別にバンドを変更した場合の処理
+async function handleManualChange(slotId, bandId) {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/admin/update-assignment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slot_id: slotId, band_id: bandId ? parseInt(bandId) : null })
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      if (bandId) {
+        currentAssignments[String(slotId)] = String(bandId);
+      } else {
+        delete currentAssignments[String(slotId)];
+      }
+      renderGrid(); // 画面ハイライト更新
+    } else {
+      alert("変更の保存に失敗しました: " + result.message);
+      await fetchAssignments(); // 元に戻す
+    }
+  } catch (err) {
+    console.error(err);
+    alert("通信エラーが発生しました。");
+    await fetchAssignments();
   }
 }
