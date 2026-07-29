@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 要素取得
   const displayUsername = document.getElementById('display-username');
-  const passwordInput = document.getElementById('delete-password-input');
   const confirmCheck = document.getElementById('delete-confirm-check');
   const deleteBtn = document.getElementById('delete-account-btn');
   const backBtn = document.getElementById('back-btn');
@@ -29,20 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
   deleteBtn.addEventListener('click', deleteAccount);
 
   async function deleteAccount() {
-    const password = passwordInput.value.trim();
-
-    if (!password) {
-      msgDelete.textContent = '確認用パスワードを入力してください';
-      return;
-    }
-
     if (!confirm('本当にアカウントを削除（退部）しますか？')) {
       return;
     }
 
     msgDelete.textContent = '';
     
-    // ★ 削除処理開始：ボタンを「削除処理中…」に変更し、操作をロック
+    // 削除処理開始：ボタンを「削除処理中…」に変更し、操作をロック
     deleteBtn.disabled = true;
     deleteBtn.textContent = '削除処理中…';
 
@@ -56,8 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: user.username,
-          password: password
+          username: user.username
         })
       });
 
