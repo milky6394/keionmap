@@ -15,13 +15,14 @@
       <p>このページにアクセスするには合言葉が必要です。</p>
       
       <form id="auth-form" onsubmit="verifyPasscode(event)">
-        <div class="form-group">
-          <input type="password" id="passcode-input" placeholder="合言葉を入力" required autofocus autocomplete="off">
+        <div class="form-group" style="margin-bottom: 15px;">
+          <input type="password" id="passcode-input" placeholder="合言葉を入力" required autofocus autocomplete="off" style="width: 100%; padding: 10px; box-sizing: border-box;">
         </div>
-        <p id="auth-error" class="error-text" style="display: none; color: red;">合言葉が違います。</p>
+        <p id="auth-error" class="error-text" style="display: none; color: red; margin-bottom: 15px;">合言葉が違います。</p>
+        
         <div class="modal-buttons">
           <button type="submit" class="btn-primary">認証</button>
-          <a href="dashboard.html"><button class="btn-secondary">戻る</button></a>
+          <button type="button" class="btn-secondary" onclick="location.href='dashboard.html'">トップへ戻る</button>
         </div>
       </form>
     </div>
@@ -41,12 +42,10 @@
           <span class="menu-title">練習割当・調整</span>
           <span class="menu-desc">自動計算と手動調整・確定</span>
         </a>
-
-        <!-- 今後、ユーザー権限変更やデータ一括削除などのメニューをここに追加可能 -->
       </div>
 
       <div style="margin-top: 30px;">
-        <a href="dashboard.html"><button class="btn-secondary">← トップメニューに戻る</button></a>
+        <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
       </div>
     </main>
   </div>

@@ -12,16 +12,38 @@
     <h2>軽音セッティング図</h2>
     <p class="subtitle">確認したいステージのセッティングを選択してください</p>
 
-    <div class="stage-button-group">
-      <!-- それぞれのHTMLファイルへ遷移するボタン -->
-      <a href="map1.html" class="btn btn-stage btn-map">体育館ステージのセッティングを開く</a>
-      <a href="map2.html" class="btn btn-stage btn-info">高専祭野外ステージのセッティングを開く</a>
-      <a href="map3.html" class="btn btn-stage btn-setting">サマフェスT棟前のセッティングを開く</a>
+    <!-- 部員名簿画面（members.html）と同じmenu-stack構造に変更 -->
+    <div class="menu-stack">
+      <a href="map1.html" class="menu-card member-menu-item">
+        <div class="menu-icon">🎪</div>
+        <div class="menu-text">
+          <div class="menu-title">体育館ステージ</div>
+          <div class="menu-desc">体育館ステージのセッティング図を確認</div>
+        </div>
+      </a>
+
+      <a href="map2.html" class="menu-card member-menu-item">
+        <div class="menu-icon">🎪</div>
+        <div class="menu-text">
+          <div class="menu-title">高専祭野外ステージ</div>
+          <div class="menu-desc">野外ステージのセッティング図を確認</div>
+        </div>
+      </a>
+
+      <a href="map3.html" class="menu-card member-menu-item">
+        <div class="menu-icon">🎪</div>
+        <div class="menu-text">
+          <div class="menu-title">サマフェスT棟前</div>
+          <div class="menu-desc">T棟前ステージのセッティング図を確認</div>
+        </div>
+      </a>
     </div>
 
     <hr class="divider">
 
-    <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
+    <button type="button" onclick="location.href='dashboard.html'" class="btn-secondary">
+      トップへ戻る
+    </button>
   </div>
 
   <script>

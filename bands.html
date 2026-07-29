@@ -12,35 +12,60 @@
     <h2>🎸 バンド管理</h2>
     <p class="subtitle">メニューを選択してください</p>
 
-    <div class="menu-group">
+    <!-- 他のメニュー画面と共通の縦並びリスト形式構造 -->
+    <div class="menu-stack">
       <!-- 1. 新しいバンドの登録 -->
-      <a href="band-register.html" class="menu-btn btn-primary">
-        <span class="icon">➕</span>
-        <span class="label">新しいバンドの登録</span>
+      <a href="band-register.html" class="menu-card member-menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">
+          <div class="menu-title">新しいバンドの登録</div>
+          <div class="menu-desc">新規バンドを結成・登録します</div>
+        </div>
       </a>
 
       <!-- 2. バンド登録表を閲覧する -->
-      <a href="band-view.html" class="menu-btn btn-primary">
-        <span class="icon">🔍</span>
-        <span class="label">バンド登録表を閲覧する</span>
+      <a href="band-view.html" class="menu-card member-menu-item">
+        <div class="menu-icon">🔍</div>
+        <div class="menu-text">
+          <div class="menu-title">バンド登録表を閲覧する</div>
+          <div class="menu-desc">登録されているバンド一覧を確認します</div>
+        </div>
       </a>
 
       <!-- 3. バンドの登録内容の変更 -->
-      <a href="band-edit.html" class="menu-btn btn-primary">
-        <span class="icon">✏️</span>
-        <span class="label">バンドの登録内容の変更</span>
+      <a href="band-edit.html" class="menu-card member-menu-item">
+        <div class="menu-icon">✏️</div>
+        <div class="menu-text">
+          <div class="menu-title">バンドの登録内容の変更</div>
+          <div class="menu-desc">メンバーやバンド名の情報を編集します</div>
+        </div>
       </a>
 
-      <!-- 4. バンドを削除 -->
-      <a href="band-delete.html" class="menu-btn btn-danger-menu">
-        <span class="icon">🗑️</span>
-        <span class="label">バンドを削除</span>
+      <!-- 4. バンドを削除（危険操作用スタイル） -->
+      <a href="band-delete.html" class="menu-card member-menu-item danger">
+        <div class="menu-icon">🗑️</div>
+        <div class="menu-text">
+          <div class="menu-title">バンドを削除</div>
+          <div class="menu-desc">解散・不要になったバンドを削除します</div>
+        </div>
       </a>
     </div>
 
     <hr class="divider">
-    <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
+
+    <button type="button" onclick="location.href='dashboard.html'" class="btn-secondary">
+      トップへ戻る
+    </button>
   </div>
 
+  <script>
+    // 未ログインアクセス防止用ガード
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('user')) {
+        alert('ログインしてください');
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>

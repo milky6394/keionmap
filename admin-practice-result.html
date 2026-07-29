@@ -9,16 +9,22 @@
 <body>
   <div class="container">
     <header class="header">
+      <div style="margin-bottom: 10px;">
+        <a href="admin.html"><button class="btn-secondary">管理者ページへ戻る</button></a>
+      </div>
       <h1>🎸 練習割り当て管理（管理者）</h1>
-      <p class="subtitle">現時点の希望データを元に割当を自動作成・個別調整できます。</p>
+      <p class="subtitle">希望データを元に割当案を作成・個別調整し、確定ボタンで公開できます。</p>
     </header>
 
     <main>
       <!-- アクションエリア -->
-      <div class="admin-actions-bar">
+      <div class="admin-actions-bar" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
         <button id="btn-calculate" class="btn btn-primary" onclick="runCreateAssignments()">
-          ⚡ 現時点の希望から割当を作成・更新する
+          ⚡ 現時点の希望から割当案を作成する
         </button>
+        <span id="draft-status-badge" class="badge-draft" style="display: none; background: #ffc107; color: #000; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">
+          ⚠️ 未確定の変更があります
+        </span>
       </div>
 
       <!-- ローディング表示 -->
@@ -29,6 +35,19 @@
       <!-- 割当結果表示（月〜金） -->
       <div id="result-container" style="display: none;">
         <div id="weekday-grid-container" class="weekday-container"></div>
+
+        <!-- 🔒 割当確定ボタンエリア -->
+        <div class="confirm-action-box" style="margin-top: 30px; padding: 20px; background: #f8f9fa; border: 2px solid #28a745; border-radius: 8px; text-align: center;">
+          <h3 style="margin-top: 0;">📢 割当内容の最終確定</h3>
+          <p>現在の割当案で確定し、メンバー全員のスケジュール画面へ公開します。</p>
+          <button id="btn-confirm" class="btn btn-success" style="padding: 12px 30px; font-size: 1.1rem; background-color: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer;" onclick="saveAndConfirmAssignments()">
+            ✅ 割り当てを確定して全員に公開する
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <a href="admin.html"><button class="btn-secondary">管理者ページへ戻る</button></a>
       </div>
     </main>
   </div>
