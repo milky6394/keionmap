@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(userDataStr);
 
   // 画面要素の設定
-  document.getElementById('welcome-title').textContent = `${user.username} さんのマイページ`;
+  document.getElementById('welcome-title').textContent = `${user.username} さん`;
 
   const userInfoBox = document.getElementById('user-info-box');
   userInfoBox.innerHTML = `
