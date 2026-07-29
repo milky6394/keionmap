@@ -3,68 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>軽音セッティング図</title>
+  <title>建物一覧</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
-    .container {
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-    h1 {
-      color: #2c3e50;
-      font-size: 24px;
-      margin-bottom: 24px;
-    }
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 16px; /* ボタン同士の間隔 */
-    }
-    .btn {
-      display: block;
-      padding: 16px 20px;
-      background-color: #3498db;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 18px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    /* スマホでタップした時のポチッとした反応 */
-    .btn:active {
-      transform: scale(0.98);
-      background-color: #2980b9;
-    }
-    /* ボタンごとの色チェンジ（お好みで） */
-    .btn-map { background-color: #2ecc71; }
-    .btn-info { background-color: #e67e22; }
-    .btn-setting { background-color: #9b59b6; }
+    body { font-family: sans-serif; padding: 20px; text-align: center; background: #fff8f0; }
+    .back-btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #666; color: white; text-decoration: none; border-radius: 8px; }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>メインメニュー</h1>
-    <div class="button-group">
-      <!-- それぞれのHTMLファイルへ遷移するボタン -->
-      <a href="map1.html" class="btn btn-map">体育館ステージのセッティングを開く</a>
-      <a href="map2.html" class="btn btn-info">高専祭野外ステージのセッティングを開く</a>
-      <a href="map3.html" class="btn btn-setting">サマフェスT棟前のセッティングを開く</a>
-    </div>
-  </div>
+  <h1>サマフェスセッティング</h1>
+  <p>サマフェスセッティングを載せる画面です。</p>
+  <a href="stage.html" class="back-btn">⬅ メニューに戻る</a>
 </body>
 </html>
