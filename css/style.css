@@ -894,3 +894,9 @@ button:hover { background-color: #0056b3; }
   border: 2px solid #ffc107;
   background-color: #fffdf5;
 }
+
+.container {
+  max-width: 800px; /* あるいは 750px や 900px など、お好みのサイズに調整 */
+  margin: 0 auto;
+  padding: 20px;    /* 必要に応じて余白を調整 */
+}
