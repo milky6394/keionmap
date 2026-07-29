@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バンド一覧 Excel出力 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- SheetJS (Excelファイル生成ライブラリ) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <div class="card member-view-card">
+    <h2>🎸 バンド一覧 Excel出力</h2>
+    <p class="subtitle">データベースからバンド情報を取得し、バンド別シートのExcelを作成します</p>
+
+    <div class="status-box" style="text-align: center; padding: 20px 0;">
+      <p id="status-message">「ダウンロード」ボタンを押すとExcelファイルを生成します。</p>
+      
+      <button type="button" id="download-btn" class="btn-primary" style="margin-top: 15px; width: auto; padding: 12px 30px; font-size: 16px;">
+        📥 バンド一覧Excelをダウンロード
+      </button>
+    </div>
+
+    <hr class="divider">
+
+    <button type="button" onclick="location.href='excel-export.html'" class="btn-secondary">
+      Excel出力メニューへ戻る
+    </button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/excel-bands.js"></script>
+</body>
+</html>

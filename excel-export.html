@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel出力 - 部内管理システム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="card members-card">
+    <h2>📊 Excel出力</h2>
+    <p class="subtitle">出力したいデータを選択してください</p>
+
+    <!-- 他のメニュー画面と統一された縦並びリスト形式 -->
+    <div class="menu-stack">
+      <!-- 1. 部員名簿データ出力（強調色 highlight） -->
+      <a href="excel-members.html" class="menu-card member-menu-item highlight">
+        <div class="menu-icon">👥</div>
+        <div class="menu-text">
+          <div class="menu-title">部員名簿を出力</div>
+          <div class="menu-desc">学年・学科・パートなどの部員一覧データ</div>
+        </div>
+      </a>
+
+      <!-- 2. バンド一覧データ出力 -->
+      <a href="excel-bands.html" class="menu-card member-menu-item highlight">
+        <div class="menu-icon">🎸</div>
+        <div class="menu-text">
+          <div class="menu-title">バンド一覧を出力</div>
+          <div class="menu-desc">登録済みバンドと構成メンバーのデータ</div>
+        </div>
+      </a>
+    </div>
+
+    <hr class="divider">
+
+    <button type="button" onclick="location.href='dashboard.html'" class="btn-secondary">
+      トップへ戻る
+    </button>
+  </div>
+
+  <script>
+    // 未ログインアクセス防止用ガード
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('user')) {
+        alert('ログインしてください');
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

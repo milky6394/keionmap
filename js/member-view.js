@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMemberList(filtered);
   }
 
-  function renderMemberList(members) {
+function renderMemberList(members) {
     countNumber.textContent = members.length;
 
     if (members.length === 0) {
@@ -106,21 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const courseMap = { M: '機械', E: '電気', S: '制御', C: '建設' };
 
-    memberList.innerHTML = members.map(m => `
+    memberList.innerHTML = members.map(m => {
+      // クラスが 0、null、undefined、空文字でない場合のみ「X組」を表示
+      const classStr = (m.class && String(m.class) !== '0') ? `${m.class}組 ` : '';
+      const courseName = courseMap[m.course] || m.course || '';
+
+      return `
       <div class="member-item-card">
         <div class="member-header">
           <span class="member-name">${escapeHtml(m.username)}</span>
-          <span class="member-badge">${m.grade}年 ${escapeHtml(m.class || '')} (${courseMap[m.course] || m.course})</span>
+          <span class="member-badge">${m.grade}年 ${escapeHtml(classStr)}(${escapeHtml(courseName)})</span>
         </div>
         <div class="member-details">
           <div><b>パート:</b> ${escapeHtml(m.instrument || '未設定')}</div>
-          <div><b>性別:</b> ${escapeHtml(m.gender || '-')}</div>
+          <div><b>所属バンド:</b> ${escapeHtml(m.band || '-')}</div>
           <div><b>学籍番号:</b> ${escapeHtml(m.number || '-')}</div>
           <div><b>LINE:</b> ${escapeHtml(m.line || '-')}</div>
           <div class="full-row"><b>兼部先:</b> ${escapeHtml(m.multi || 'なし')}</div>
         </div>
       </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function escapeHtml(str) {
