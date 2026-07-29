@@ -8,7 +8,7 @@ const usernameInput = document.getElementById('username-input');
 
 const gradeSelect = document.getElementById('grade-select');
 const classGroup = document.getElementById('class-group');
-const classInput = document.getElementById('class-input');
+const classSelect = document.getElementById('class-select');
 const courseSelect = document.getElementById('course-select');
 const numberInput = document.getElementById('number-input');
 const genderSelect = document.getElementById('gender-select');
@@ -116,7 +116,7 @@ async function checkMember() {
 async function registerMember() {
   const isDorm = dormitorySelect.value === 'true';
   const selectedGrade = gradeSelect.value;
-  const memberClass = (selectedGrade === '1' || selectedGrade === '2') ? classInput.value.trim() : '';
+  const memberClass = (selectedGrade === '1' || selectedGrade === '2') ? classSelect.value.trim() : '';
 
   const payload = {
     username: usernameInput.value.trim(),
