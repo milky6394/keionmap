@@ -75,11 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr>
-          <td><strong>${escapeHtml(u.username)}</strong></td>
-          <td>${u.grade ? u.grade + '年' + classStr : '-'}</td>
-          <td>${escapeHtml(u.instrument || '-')}</td>
-          <td>${escapeHtml(u.band || '-')}</td>
-          <td>
+          <td data-label="名前"><strong>${escapeHtml(u.username)}</strong></td>
+          <td data-label="学年/クラス">${u.grade ? u.grade + '年' + classStr : '-'}</td>
+          <td data-label="担当パート">${escapeHtml(u.instrument || '-')}</td>
+          <td data-label="所属バンド">${escapeHtml(u.band || '-')}</td>
+          <td data-label="操作">
             <button class="action-btn btn-edit-user" onclick="openEditModal('${escapeHtml(u.username)}')">編集</button>
             <button class="action-btn btn-delete-user" onclick="openDeleteModal('${escapeHtml(u.username)}')">削除</button>
           </td>
