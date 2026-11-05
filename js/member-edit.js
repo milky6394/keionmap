@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 要素取得
   const displayUsername = document.getElementById('display-username');
+  const furiganaInput = document.getElementById('edit-furigana-input');
   const gradeSelect = document.getElementById('edit-grade-select');
   const classGroup = document.getElementById('edit-class-group');
   const classInput = document.getElementById('edit-class-input');
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 初期値のセット
   displayUsername.textContent = user.username;
+  furiganaInput.value = user.furigana || '';
   gradeSelect.value = user.grade || 1;
   classInput.value = user.class || '';
   courseSelect.value = user.course || 'M';
@@ -73,9 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDorm = dormitorySelect.value === 'true';
     const selectedGrade = gradeSelect.value;
     const memberClass = (selectedGrade === '1' || selectedGrade === '2') ? classInput.value.trim() : '';
+    const furigana = furiganaInput.value.trim();
+
+    if (!furigana) {
+      msgEdit.textContent = 'フリガナを入力してください';
+      return;
+    }
 
     const payload = {
       username: user.username,
+      furigana,
       grade: parseInt(selectedGrade, 10),
       member_class: memberClass,
       course: courseSelect.value,

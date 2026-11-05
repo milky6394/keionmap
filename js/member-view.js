@@ -114,7 +114,10 @@ function renderMemberList(members) {
       return `
       <div class="member-item-card">
         <div class="member-header">
-          <span class="member-name">${escapeHtml(m.username)}</span>
+          <span class="member-name">
+            ${escapeHtml(m.username)}
+            ${m.furigana ? `<span class="member-furigana">（${escapeHtml(m.furigana)}）</span>` : ''}
+          </span>
           <span class="member-badge">${m.grade}年 ${escapeHtml(classStr)}(${escapeHtml(courseName)})</span>
         </div>
         <div class="member-details">

@@ -7,6 +7,7 @@ const passwordInput = document.getElementById('password-input');
 const usernameInput = document.getElementById('username-input');
 
 const gradeSelect = document.getElementById('grade-select');
+const furiganaInput = document.getElementById('furigana-input');
 const classGroup = document.getElementById('class-group');
 const classSelect = document.getElementById('class-select');
 const courseSelect = document.getElementById('course-select');
@@ -56,7 +57,7 @@ gradeSelect.addEventListener('change', () => {
     classGroup.classList.remove('hidden');
   } else {
     classGroup.classList.add('hidden');
-    classInput.value = '';
+    classSelect.value = '';
   }
 });
 
@@ -140,9 +141,16 @@ async function registerMember() {
   const isDorm = dormitorySelect.value === 'true';
   const selectedGrade = gradeSelect.value;
   const memberClass = (selectedGrade === '1' || selectedGrade === '2') ? classSelect.value.trim() : '';
+  const furigana = furiganaInput.value.trim();
+
+  if (!furigana) {
+    msgRegister.textContent = 'フリガナを入力してください';
+    return;
+  }
 
   const payload = {
     username: usernameInput.value.trim(),
+    furigana,
     grade: parseInt(selectedGrade, 10),
     member_class: memberClass,
     course: courseSelect.value,
