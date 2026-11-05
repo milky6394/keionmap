@@ -110,13 +110,14 @@ function renderMemberList(members) {
       // クラスが 0、null、undefined、空文字でない場合のみ「X組」を表示
       const classStr = (m.class && String(m.class) !== '0') ? `${m.class}組 ` : '';
       const courseName = courseMap[m.course] || m.course || '';
+      const furigana = String(m.furigana || '').trim();
 
       return `
       <div class="member-item-card">
         <div class="member-header">
           <span class="member-name">
             ${escapeHtml(m.username)}
-            ${m.furigana ? `<span class="member-furigana">（${escapeHtml(m.furigana)}）</span>` : ''}
+            <span class="member-furigana">（${escapeHtml(furigana || 'フリガナ未登録')}）</span>
           </span>
           <span class="member-badge">${m.grade}年 ${escapeHtml(classStr)}(${escapeHtml(courseName)})</span>
         </div>
