@@ -1,4 +1,10 @@
-﻿body {
+﻿*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
   font-family: sans-serif;
   display: flex;
   justify-content: center;
@@ -121,13 +127,24 @@ label {
   margin-bottom: 4px;
   color: #333;
 }
-input, select, textarea {
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea {
   width: 100%;
   padding: 8px;
-  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  accent-color: #007bff;
+}
+
 textarea {
   resize: vertical;
   font: inherit;
@@ -386,6 +403,7 @@ button:hover { background-color: #0056b3; }
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
+  line-height: 1.4;
   color: #374151;
   cursor: pointer;
 }
