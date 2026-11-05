@@ -54,6 +54,23 @@ body {
   color: #495057;
 }
 
+.profile-edit-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #6c757d;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+}
+
+.profile-edit-link:hover {
+  background-color: #5a6268;
+}
+
 /* メニューグリッドレイアウト */
 .menu-grid {
   display: grid;
