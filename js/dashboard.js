@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  sessionStorage.removeItem('adminAuthenticated');
+
   // セッションストレージからログイン情報を取得
   const userDataStr = sessionStorage.getItem('user');
 

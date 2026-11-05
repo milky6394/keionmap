@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (band.current_songs) {
         const currentSongs = document.createElement('p');
         currentSongs.className = 'current-songs';
-        currentSongs.textContent = `現在取り組んでいる曲: ${band.current_songs}`;
+        currentSongs.textContent = `現在取り組んでいる曲:\n${band.current_songs}`;
         card.appendChild(header);
         card.appendChild(currentSongs);
       } else {

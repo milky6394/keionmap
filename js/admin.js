@@ -1,8 +1,13 @@
 // 🔑 管理者の合言葉（必要に応じて変更してください）
 const ADMIN_PASSCODE = "koara"; 
+const ADMIN_AUTH_SESSION_KEY = "adminAuthenticated";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ページ読み込み時は常にモーダルを表示し、管理者コンテンツを非表示にする
+  if (sessionStorage.getItem(ADMIN_AUTH_SESSION_KEY) === "true") {
+    showAdminContent();
+    return;
+  }
+
   document.getElementById("auth-modal").style.display = "flex";
   document.getElementById("admin-content").style.display = "none";
 });
@@ -15,7 +20,7 @@ function verifyPasscode(event) {
   const errorMsg = document.getElementById("auth-error");
 
   if (inputPass === ADMIN_PASSCODE) {
-    // 認証成功：コンテンツを表示してモーダルを閉じる（保存はしない）
+    sessionStorage.setItem(ADMIN_AUTH_SESSION_KEY, "true");
     showAdminContent();
   } else {
     // 認証失敗
