@@ -32,14 +32,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const filtered = allBandsData.filter(band => {
       // バンド名で検索
       const matchBandName = band.band_name.toLowerCase().includes(query);
+      const matchCurrentSongs = String(band.current_songs || '').toLowerCase().includes(query);
 
       // メンバー名・パート名で検索
-      const matchMember = band.members.some(m => 
-        m.username.toLowerCase().includes(query) || 
-        m.part.toLowerCase().includes(query)
+      const matchMember = (band.members || []).some(m =>
+        (m.username || '').toLowerCase().includes(query) ||
+        (m.part || '').toLowerCase().includes(query)
       );
 
-      return matchBandName || matchMember;
+      return matchBandName || matchCurrentSongs || matchMember;
     });
 
     renderBands(filtered);
@@ -63,6 +64,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       header.className = 'band-card-header';
       header.innerHTML = `<h3 class="band-title">🎸 ${escapeHtml(band.band_name)}</h3>`;
 
+      if (band.current_songs) {
+        const currentSongs = document.createElement('p');
+        currentSongs.className = 'current-songs';
+        currentSongs.textContent = `現在取り組んでいる曲: ${band.current_songs}`;
+        card.appendChild(header);
+        card.appendChild(currentSongs);
+      } else {
+        card.appendChild(header);
+      }
+
       // メンバータグリスト
       const tagList = document.createElement('div');
       tagList.className = 'member-tag-list';
@@ -79,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         tagList.innerHTML = '<span style="color: #9ca3af; font-size: 0.85rem;">メンバー未登録</span>';
       }
 
-      card.appendChild(header);
       card.appendChild(tagList);
       container.appendChild(card);
     });

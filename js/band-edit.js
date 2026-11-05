@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const selectBand = document.getElementById('select-band-to-edit');
   const editFormArea = document.getElementById('edit-form-area');
   const bandNameInput = document.getElementById('band-name-input');
+  const currentSongsInput = document.getElementById('current-songs-input');
   const memberListDiv = document.getElementById('member-list');
   const addRowBtn = document.getElementById('add-member-row-btn');
   const saveBtn = document.getElementById('save-band-btn');
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // フォームへの既存データのセット処理
 function populateForm(band) {
   bandNameInput.value = band.band_name;
+  currentSongsInput.value = band.current_songs || '';
   memberListDiv.innerHTML = '';
 
   if (band.members && band.members.length > 0) {
@@ -314,6 +316,7 @@ function addMemberRow(initialUsername = '', initialPart = '') {
         body: JSON.stringify({
           band_id: bandId,
           band_name: bandName,
+          current_songs: currentSongsInput.value.trim(),
           members: membersData
         })
       });

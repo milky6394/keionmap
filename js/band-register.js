@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const bandNameInput = document.getElementById('band-name-input');
+  const currentSongsInput = document.getElementById('current-songs-input');
   const memberListDiv = document.getElementById('member-list');
   const addRowBtn = document.getElementById('add-member-row-btn');
   const saveBtn = document.getElementById('save-band-btn');
@@ -212,6 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           band_name: bandName,
+          current_songs: currentSongsInput.value.trim(),
           members: membersData
         })
       });
