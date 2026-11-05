@@ -84,24 +84,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // フォームへの既存データのセット処理
-  function populateForm(band) {
-    bandNameInput.value = band.band_name;
-    memberListDiv.innerHTML = '';
+// フォームへの既存データのセット処理
+function populateForm(band) {
+  bandNameInput.value = band.band_name;
+  memberListDiv.innerHTML = '';
 
-    if (band.members && band.members.length > 0) {
-      band.members.forEach(m => {
-        addMemberRow(m.username, m.part);
-      });
-    } else {
-      addMemberRow();
-    }
+  if (band.members && band.members.length > 0) {
+    band.members.forEach(m => {
+      // m.instrument または m.part を渡す
+      addMemberRow(m.username, m.instrument || m.part || '');
+    });
+  } else {
+    addMemberRow();
   }
+}
 
   // 行追加ボタン
   addRowBtn.addEventListener('click', () => addMemberRow());
 
   // メンバー行を追加・初期化する関数
-  function addMemberRow(initialUsername = '', initialPart = '') {
+  // メンバー行を追加・初期化する関数
+function addMemberRow(initialUsername = '', initialPart = '') {
     const card = document.createElement('div');
     card.className = 'member-card-row';
     card.style.cssText = `
@@ -111,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       padding: 12px;
       margin-bottom: 12px;
     `;
-
+    
     // 1行目：学年・部員選択・削除ボタン
     const topRow = document.createElement('div');
     topRow.style.cssText = 'display: flex; gap: 8px; align-items: center; margin-bottom: 10px;';
@@ -146,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       userSelect.innerHTML = options;
     };
 
-    // 初期表示時に指定ユーザーの学年に絞り込めるか判定
+    // 初期表示時に指定ユーザーの学なに絞り込めるか判定
     if (initialUsername) {
       const targetUser = allMembers.find(m => m.username === initialUsername);
       if (targetUser) {
@@ -183,7 +186,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     partLabel.style.cssText = 'font-weight: bold; font-size: 0.85rem; color: #4b5563;';
     partRow.appendChild(partLabel);
 
-    const existingParts = initialPart.trim().split(/\s+/);
+    // ★ 修正ポイント: initialPart が null/undefined の場合でも安全に split できるようガード ★
+    const safePartString = String(initialPart || '');
+    const existingParts = safePartString.trim().split(/\s+/);
 
     const otherTextInput = document.createElement('input');
     otherTextInput.type = 'text';
@@ -244,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.appendChild(topRow);
     card.appendChild(partRow);
     memberListDiv.appendChild(card);
-  }
+}
 
   // 保存（更新）処理
   saveBtn.addEventListener('click', async () => {
@@ -260,13 +265,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const membersData = [];
 
     cards.forEach(card => {
-      const username = card.querySelector('.member-select').value;
+      const username = card.querySelector('.member-select')?.value || '';
       const checkedBoxes = card.querySelectorAll('.part-checkbox:checked');
 
       let partString = '';
       checkedBoxes.forEach(box => {
         if (box.value === 'Other') {
-          const otherVal = card.querySelector('.other-part-text').value.trim();
+          const otherInput = card.querySelector('.other-part-text');
+          const otherVal = otherInput ? otherInput.value.trim() : '';
           const customPart = otherVal || 'Other';
           partString += `${customPart} `;
         } else {
@@ -274,10 +280,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
 
+      const finalInstrument = partString.trim();
+
       if (username) {
         membersData.push({
           username: username,
-          part: partString
+          instrument: finalInstrument, // バックエンド用
+          part: finalInstrument       // JS内のチェック用（両方持たせておく）
         });
       }
     });
@@ -287,7 +296,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    const hasEmptyPart = membersData.some(m => !m.part.trim());
+    // ★ m.part が安全に参照できるようになり、エラーが解消されます ★
+    const hasEmptyPart = membersData.some(m => !m.part || !m.part.trim());
     if (hasEmptyPart) {
       msgDiv.textContent = '選択したメンバーの担当パートを少なくとも1つチェックしてください';
       return;
@@ -323,5 +333,5 @@ document.addEventListener('DOMContentLoaded', async () => {
       saveBtn.disabled = false;
       saveBtn.textContent = '更新内容を保存する';
     }
-  });
+});
 });

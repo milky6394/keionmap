@@ -28,6 +28,7 @@ const msgPassword = document.getElementById('msg-password');
 const msgName = document.getElementById('msg-name');
 const msgRegister = document.getElementById('msg-register');
 const displayNewName = document.getElementById('display-new-name');
+const passwordLoading = document.getElementById('password-loading');
 
 // イベント
 verifyPasswordBtn.addEventListener('click', verifyPassword);
@@ -69,8 +70,12 @@ dormitorySelect.addEventListener('change', () => {
 
 // 1. パスワード認証
 async function verifyPassword() {
+  if (verifyPasswordBtn.disabled) return;
+
   const password = passwordInput.value;
   msgPassword.textContent = '';
+  passwordLoading.classList.remove('hidden');
+  verifyPasswordBtn.disabled = true;
 
   try {
     const res = await fetch(`${BACKEND_URL}/api/verify-password`, {
@@ -88,6 +93,9 @@ async function verifyPassword() {
     }
   } catch (err) {
     msgPassword.textContent = '通信エラーが発生しました';
+  } finally {
+    passwordLoading.classList.add('hidden');
+    verifyPasswordBtn.disabled = false;
   }
 }
 

@@ -163,14 +163,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const membersData = [];
 
     cards.forEach(card => {
-      const username = card.querySelector('.member-select').value;
+      const username = card.querySelector('.member-select')?.value || '';
       const checkedBoxes = card.querySelectorAll('.part-checkbox:checked');
       
       let partString = '';
       checkedBoxes.forEach(box => {
         if (box.value === 'Other') {
-          const otherVal = card.querySelector('.other-part-text').value.trim();
-          // 入力された文字があればそれを使用、空なら"Other"
+          const otherInput = card.querySelector('.other-part-text');
+          const otherVal = otherInput ? otherInput.value.trim() : '';
           const customPart = otherVal || 'Other';
           partString += `${customPart} `;
         } else {
@@ -178,10 +178,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
 
+      // ★ 1. trim() で末尾のスペースを消去
+      const finalInstrument = partString.trim();
+
       if (username) {
         membersData.push({
           username: username,
-          part: partString // 例: "Gt Vo Sax " など
+          instrument: finalInstrument, // ★ 2. DB用の 'instrument' を追加（これがキーポイントです）
+          part: finalInstrument        // ★ JSチェック用の 'part' も保持
         });
       }
     });
@@ -191,7 +195,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    const hasEmptyPart = membersData.some(m => !m.part.trim());
+    // ★ 3. チェック処理も更新コードと同一にして安全化
+    const hasEmptyPart = membersData.some(m => !m.part || !m.part.trim());
     if (hasEmptyPart) {
       msgDiv.textContent = '選択したメンバーの担当パートを少なくとも1つチェックしてください';
       return;
