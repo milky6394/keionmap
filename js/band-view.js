@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       allBandsData = data.bands;
       renderBands(allBandsData);
     } else {
-      container.innerHTML = `<p style="color: red; text-align: center;">${data.message}</p>`;
+      container.innerHTML = `<p class="band-view-message">${data.message}</p>`;
     }
   } catch (err) {
     console.error('通信エラー:', err);
-    container.innerHTML = '<p style="color: red; text-align: center;">データの読み込みに失敗しました。</p>';
+    container.innerHTML = '<p class="band-view-message">データの読み込みに失敗しました。</p>';
   }
 
   // リアルタイム検索フィルター
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     container.innerHTML = '';
 
     if (bands.length === 0) {
-      container.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 20px;">該当するバンドが見つかりません。</p>';
+      container.innerHTML = '<p class="band-view-empty">該当するバンドが見つかりません。</p>';
       return;
     }
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           tagList.appendChild(tag);
         });
       } else {
-        tagList.innerHTML = '<span style="color: #9ca3af; font-size: 0.85rem;">メンバー未登録</span>';
+        tagList.innerHTML = '<span class="band-member-empty">メンバー未登録</span>';
       }
 
       card.appendChild(tagList);

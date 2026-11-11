@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const furigana = furiganaInput.value.trim();
 
     if (!furigana) {
+      msgEdit.classList.add('message-status-error');
       msgEdit.textContent = 'フリガナを入力してください';
       return;
     }
@@ -98,15 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     msgEdit.textContent = '';
-    msgEdit.style.color = 'red';
+    msgEdit.classList.remove('message-status-success');
+    msgEdit.classList.add('message-status-error');
 
     // ★ 1. 保存開始時：ボタンを「保存中…」に変更し、クリック操作をロックする
     saveBtn.disabled = true;
     saveBtn.textContent = '保存中…';
 
     if (backBtn) {
-      backBtn.style.pointerEvents = 'none'; // 戻るリンクをクリック不可に
-      backBtn.style.opacity = '0.6';       // 見た目も無効化っぽく薄くする
+      backBtn.classList.add('is-interaction-disabled');
     }
 
     try {
@@ -121,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // セッションのユーザーデータを最新化
         sessionStorage.setItem('user', JSON.stringify(data.user_data));
         
-        msgEdit.style.color = 'green';
+        msgEdit.classList.remove('message-status-error');
+        msgEdit.classList.add('message-status-success');
         msgEdit.textContent = '登録情報を更新しました！';
         
         // 成功時はそのまま画面遷移
@@ -144,8 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveBtn.textContent = '変更内容を保存';
 
     if (backBtn) {
-      backBtn.style.pointerEvents = 'auto';
-      backBtn.style.opacity = '1';
+      backBtn.classList.remove('is-interaction-disabled');
     }
   }
 });

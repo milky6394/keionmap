@@ -4,52 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>【管理者】バンド情報編集・削除 - 部内管理システム</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .danger-zone-card {
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 30px;
-    }
-    .btn-danger {
-      background-color: #ef4444;
-      color: #ffffff;
-      border: none;
-      padding: 10px 16px;
-      font-size: 0.95rem;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      font-weight: bold;
-    }
-    .btn-danger:hover {
-      background-color: #dc2626;
-    }
-    .btn-danger:disabled {
-      background-color: #fca5a5;
-      cursor: not-allowed;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
 </head>
 <body>
 
-  <div class="card members-card" style="max-width: 650px;">
+  <div class="card members-card band-form-card admin-band-edit-card">
     <h2>👑 バンド情報の編集・削除（管理者）</h2>
     <p class="subtitle">部内のすべてのバンド情報を更新または削除できます</p>
 
     <!-- バンド選択 -->
     <div class="form-group">
       <label>対象のバンドを選択</label>
-      <select id="select-band-to-edit" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc;">
+      <select id="select-band-to-edit" class="band-select">
         <option value="">-- 読み込み中... --</option>
       </select>
     </div>
 
     <!-- 編集フォーム（未選択時は非表示） -->
-    <div id="edit-form-area" style="display: none; margin-top: 20px;">
-      <hr class="divider" style="margin-bottom: 20px;">
+    <div id="edit-form-area" class="band-edit-form hidden">
+      <hr class="divider band-edit-divider">
 
       <!-- バンド名入力 -->
       <div class="form-group">
@@ -68,27 +41,27 @@
         <div id="member-list">
           <!-- 動的にメンバー行が挿入されます -->
         </div>
-        <button type="button" id="add-member-row-btn" class="btn-secondary" style="margin-top: 10px;">＋ メンバーを追加</button>
+        <button type="button" id="add-member-row-btn" class="btn-secondary band-add-member-button">＋ メンバーを追加</button>
       </div>
 
-      <button id="save-band-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">更新内容を保存する</button>
+      <button id="save-band-btn" class="btn-primary band-save-button">更新内容を保存する</button>
       <div id="msg-band" class="message error"></div>
 
       <!-- 危険エリア：バンド削除機能 -->
       <div class="danger-zone-card">
-        <h3 style="color: #991b1b; font-size: 1rem; margin: 0 0 8px 0;">⚠️ バンドの削除</h3>
-        <p style="font-size: 0.85rem; color: #7f1d1d; margin-bottom: 12px; line-height: 1.4;">
+        <h3 class="danger-zone-title">⚠️ バンドの削除</h3>
+        <p class="danger-zone-description">
           選択中のバンドをデータベースから完全に削除します。<br>
           誤操作防止のため、下のチェックボックスを有効にしてから削除ボタンを押してください。
         </p>
 
-        <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #991b1b; margin-bottom: 12px; cursor: pointer; font-weight: bold;">
+        <label class="danger-zone-confirm-label">
           <input type="checkbox" id="confirm-delete-checkbox">
           このバンドを完全に削除することを了解しました
         </label>
 
         <button id="delete-band-btn" class="btn-danger" disabled>このバンドを削除する</button>
-        <div id="msg-delete" class="message error" style="margin-top: 8px;"></div>
+        <div id="msg-delete" class="message error danger-zone-message"></div>
       </div>
     </div>
 

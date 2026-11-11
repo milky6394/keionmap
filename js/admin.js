@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  document.getElementById("auth-modal").style.display = "flex";
-  document.getElementById("admin-content").style.display = "none";
+  document.getElementById("auth-modal").classList.remove("is-hidden");
+  document.getElementById("admin-content").classList.remove("is-visible");
 });
 
 // 合言葉の検証処理
@@ -24,13 +24,13 @@ function verifyPasscode(event) {
     showAdminContent();
   } else {
     // 認証失敗
-    errorMsg.style.display = "block";
+    errorMsg.classList.add("is-visible");
     document.getElementById("passcode-input").value = "";
   }
 }
 
 // 管理者コンテンツを表示
 function showAdminContent() {
-  document.getElementById("auth-modal").style.display = "none";
-  document.getElementById("admin-content").style.display = "block";
+  document.getElementById("auth-modal").classList.add("is-hidden");
+  document.getElementById("admin-content").classList.add("is-visible");
 }

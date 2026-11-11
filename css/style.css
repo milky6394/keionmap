@@ -540,3 +540,752 @@ button:hover { background-color: #0056b3; }
   margin: 0 auto;
   padding: 20px;    /* 必要に応じて余白を調整 */
 }
+
+/* Admin dashboard */
+.admin-auth-group {
+  margin-bottom: 15px;
+}
+
+.admin-passcode-input {
+  width: 100%;
+  padding: 10px;
+}
+
+.admin-auth-error {
+  display: none;
+  color: red;
+  margin-bottom: 15px;
+}
+
+.admin-auth-error.is-visible {
+  display: block;
+}
+
+.admin-content {
+  display: none;
+}
+
+.admin-content.is-visible {
+  display: block;
+}
+
+.modal-overlay.is-hidden {
+  display: none;
+}
+
+.admin-back-wrapper {
+  margin-top: 30px;
+}
+
+/* Band forms and previews */
+.band-form-card {
+  max-width: 650px;
+}
+
+.band-delete-card {
+  max-width: 600px;
+}
+
+.band-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.band-edit-form {
+  margin-top: 20px;
+}
+
+.band-edit-divider {
+  margin-bottom: 20px;
+}
+
+.band-add-member-button {
+  margin-top: 10px;
+}
+
+.band-save-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.danger-zone-card,
+.danger-zone {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.danger-zone-card {
+  margin-top: 30px;
+}
+
+.admin-band-edit-card .btn-danger {
+  font-size: 0.95rem;
+}
+
+.danger-zone {
+  margin-top: 20px;
+}
+
+.danger-zone-title {
+  color: #991b1b;
+  font-size: 1rem;
+  margin: 0 0 8px;
+}
+
+.danger-zone-description {
+  font-size: 0.85rem;
+  color: #7f1d1d;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.danger-zone-confirm-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #991b1b;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.danger-zone-message {
+  margin-top: 8px;
+}
+
+.delete-warning-title {
+  color: #991b1b;
+  font-weight: bold;
+  margin: 0 0 8px;
+}
+
+.delete-warning-description {
+  font-size: 0.85rem;
+  color: #7f1d1d;
+  margin: 0;
+}
+
+.band-preview-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+}
+
+.delete-preview-band-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+}
+
+.delete-preview-members {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin: 0;
+}
+
+.delete-message {
+  margin-top: 10px;
+}
+
+.band-view-card {
+  max-width: 700px;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.band-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.band-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.band-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+.member-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.member-tag {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.part-badge {
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+
+.current-songs {
+  margin: 0 0 12px;
+  color: #4b5563;
+  white-space: pre-line;
+}
+
+.band-list-loading {
+  text-align: center;
+  color: #6b7280;
+}
+
+.excel-status {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.excel-download-button {
+  margin-top: 15px;
+  width: auto;
+  padding: 12px 30px;
+  font-size: 16px;
+}
+
+/* User management page */
+.admin-users-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.admin-users-page .filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-users-page .filter-bar input,
+.admin-users-page .filter-bar select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.admin-users-page .filter-bar input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.admin-users-page .table-container {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.admin-users-page table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.admin-users-page th,
+.admin-users-page td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.admin-users-page th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.admin-users-page tr:hover {
+  background: #f9fafb;
+}
+
+.action-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: bold;
+  margin-right: 4px;
+  display: inline-block;
+  width: fit-content;
+  line-height: 1.2;
+}
+
+.btn-edit-user {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-delete-user {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-users-page .modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.admin-users-page .modal-overlay.active {
+  display: flex;
+}
+
+.admin-users-page .modal-overlay .card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.admin-users-page .hidden {
+  display: none !important;
+}
+
+.admin-users-loading {
+  text-align: center;
+  color: #6b7280;
+}
+
+.admin-users-empty {
+  text-align: center;
+  color: #6b7280;
+}
+
+.message-status-error {
+  color: red;
+}
+
+.message-status-success {
+  color: green;
+}
+
+.is-interaction-disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Dynamically generated band member rows */
+.member-card-row {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.member-row-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.member-grade-select {
+  width: 80px;
+  padding: 8px 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+.member-select {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.member-row-delete {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  flex-shrink: 0;
+  font-weight: bold;
+}
+
+.member-part-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #fff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.member-part-label {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.member-part-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.other-part-text {
+  display: none;
+  width: 120px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.other-part-text.is-visible {
+  display: inline-block;
+}
+
+/* Member and band form feedback */
+/* Stage map pages */
+.stage-map-page {
+  display: block;
+  justify-content: initial;
+  align-items: initial;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #0a0a0a;
+  color: #333;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.stage-map-page *,
+.stage-map-page *::before,
+.stage-map-page *::after {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stage-map-page .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.stage-map-page .back-btn {
+  color: white;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.stage-map-page .viewport {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  background-color: #1a1a1a;
+  cursor: grab;
+}
+
+.stage-map-page .map-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100vw;
+  max-width: 100%;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stage-map-page .map-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.stage-map-page .info-image {
+  width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+.stage-map-page .info-image.is-visible {
+  display: block;
+}
+
+.stage-map-page .map-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage-map-page .building-area {
+  fill: rgba(255, 255, 255, 0);
+  stroke: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stage-map-page .building-area.active {
+  fill: rgba(241, 196, 15, 0.4);
+  stroke: #f1c40f;
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 6px #f1c40f);
+}
+
+.stage-map-page .info-sheet {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 24px 32px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  transition: bottom 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+  z-index: 100;
+}
+
+.stage-map-page .info-sheet.open {
+  bottom: 0;
+}
+
+.stage-map-page .info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stage-map-page .info-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.stage-map-page .close-btn {
+  background: #eee;
+  border: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  font-weight: normal;
+}
+
+.stage-map-page .info-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+
+.simple-stage-page {
+  display: block;
+  min-height: 0;
+  margin: 8px;
+  padding: 20px;
+  font-family: sans-serif;
+  text-align: center;
+  background: #fff8f0;
+}
+
+.simple-stage-page .back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #666;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.band-view-message {
+  color: red;
+  text-align: center;
+}
+
+.band-view-empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 20px;
+}
+
+.band-member-empty {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .admin-users-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .admin-users-page .header h1 {
+    font-size: 1.35rem;
+  }
+
+  .admin-users-page .filter-bar {
+    gap: 8px;
+  }
+
+  .admin-users-page .filter-bar input {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .admin-users-page .filter-bar select {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .admin-users-page .table-container {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .admin-users-page table,
+  .admin-users-page tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-users-page thead {
+    display: none;
+  }
+
+  .admin-users-page tbody tr {
+    display: block;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    background: #fff;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .admin-users-page tbody td {
+    display: grid;
+    grid-template-columns: minmax(88px, 34%) minmax(0, 1fr);
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-users-page tbody td::before {
+    content: attr(data-label);
+    color: #6b7280;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .admin-users-page tbody td[colspan] {
+    display: block;
+    text-align: center;
+  }
+
+  .admin-users-page tbody td[colspan]::before {
+    content: none;
+  }
+
+  .admin-users-page tbody td:last-child:not([colspan]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .admin-users-page tbody td:last-child:not([colspan])::before {
+    content: attr(data-label);
+    width: 100%;
+  }
+
+  .admin-users-page .action-btn {
+    margin: 0;
+  }
+
+  .admin-users-page .modal-overlay {
+    align-items: flex-start;
+  }
+}

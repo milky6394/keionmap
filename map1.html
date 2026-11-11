@@ -4,139 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>軽音セッティング図</title>
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
   <!-- スマホの指操作（パン・ズーム）を快適にするライブラリ -->
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0a0a0a;
-      color: #333;
-      overflow: hidden; /* 余計なスクロールを禁止 */
-      width: 100vw;
-      height: 100vh;
-    }
-
-    /* ヘッダー */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-    }
-    .back-btn {
-      color: white;
-      text-decoration: none;
-      background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    /* 全体表示領域（画面全体で指のドラッグを受け付ける） */
-    .viewport {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-      touch-action: none; /* スマホ標準のスクロール・拡大を無効化 */
-      background-color: #1a1a1a;
-      cursor: grab;
-    }
-
-    /* マップのステージ */
-    .map-stage {
-      position: relative;
-      aspect-ratio: 16 / 9; /* 画像の縦横比 */
-      width: 100vw;
-      max-width: 100%;
-      margin: 0 auto;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* 背景画像 */
-    .map-image {
-      width: 100%;
-      height: 100%;
-      display: block;
-      pointer-events: none; /* 画像へのタッチイベントを透過 */
-    }
-
-/* 💡 追加: 説明シートの中の画像スタイル */
-    .info-image {
-      width: 100%;
-      max-height: 180px; /* 画像が高くなりすぎないように制限 */
-      object-fit: contain; /* 枠に合わせて綺麗に切り抜く */
-      border-radius: 12px;
-      margin-bottom: 12px;
-      display: none; /* 初期状態では非表示（画像がある時だけJSで表示） */
-    }
-
-    /* SVGオーバーレイ（画像と寸分たがわず完全密着） */
-    .map-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* 当たり判定エリア */
-    .building-area {
-      /* タップに反応させるため極小の不透明度（見た目はほぼ透明） */
-      fill: rgba(255, 255, 255, 0);
-      stroke: transparent;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    /* ハイライト表示 */
-    .building-area.active {
-      fill: rgba(241, 196, 15, 0.4);
-      stroke: #f1c40f;
-      stroke-width: 3px;
-      filter: drop-shadow(0 0 6px #f1c40f);
-    }
-
-    /* 説明シート */
-    .info-sheet {
-      position: fixed;
-      bottom: -100%;
-      left: 0;
-      width: 100%;
-      background: white;
-      border-radius: 20px 20px 0 0;
-      padding: 20px 24px 32px 24px;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-      transition: bottom 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
-      z-index: 100;
-    }
-    .info-sheet.open { bottom: 0; }
-    .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .info-title { font-size: 20px; font-weight: bold; margin: 0; color: #2c3e50; }
-    .close-btn { background: #eee; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-    .info-desc { font-size: 14px; line-height: 1.6; color: #666; margin: 0; }
-  </style>
 </head>
-<body>
+<body class="stage-map-page">
 
   <div class="header">
     <span>体育館ステージ</span>
@@ -255,9 +127,9 @@ areas.forEach(area => {
           // 💡 2. 画像が設定されているかチェックして表示・非表示を切り替え
           if (data.image) {
             infoImage.src = data.image;
-            infoImage.style.display = 'block';
+            infoImage.classList.add('is-visible');
           } else {
-            infoImage.style.display = 'none';
+            infoImage.classList.remove('is-visible');
           }
 
           infoSheet.classList.add('open');

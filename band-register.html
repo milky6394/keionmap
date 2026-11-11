@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新しいバンドの登録 - 部内管理システム</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
 </head>
 <body>
 
-  <div class="card members-card" style="max-width: 650px;">
+  <div class="card members-card band-form-card">
     <h2>➕ 新しいバンドの登録</h2>
     <p class="subtitle">バンド名とメンバー・担当パートを入力してください</p>
 
@@ -29,10 +29,10 @@
       <div id="member-list">
         <!-- 動的にメンバー行が追加されます -->
       </div>
-      <button type="button" id="add-member-row-btn" class="btn-secondary" style="margin-top: 10px;">＋ メンバーを追加</button>
+      <button type="button" id="add-member-row-btn" class="btn-secondary band-add-member-button">＋ メンバーを追加</button>
     </div>
 
-    <button id="save-band-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">バンドを登録する</button>
+    <button id="save-band-btn" class="btn-primary band-save-button">バンドを登録する</button>
     <div id="msg-band" class="message error"></div>
 
     <hr class="divider">

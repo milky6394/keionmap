@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   selectBand.addEventListener('change', () => {
     const bandId = parseInt(selectBand.value, 10);
     if (!bandId) {
-      confirmArea.style.display = 'none';
+      confirmArea.classList.add('hidden');
       return;
     }
 
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewMembers.textContent = 'メンバー: (未登録)';
       }
 
-      confirmArea.style.display = 'block';
+      confirmArea.classList.remove('hidden');
     }
   });
 

@@ -32,21 +32,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   function addMemberRow() {
     const card = document.createElement('div');
     card.className = 'member-card-row';
-    card.style.cssText = `
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-    `;
 
     // --- 1行目: 学年絞り込み + 部員選択 + 削除ボタン ---
     const topRow = document.createElement('div');
-    topRow.style.cssText = 'display: flex; gap: 8px; align-items: center; margin-bottom: 10px;';
+    topRow.className = 'member-row-top';
 
     // 学年フィルター（幅固定）
     const gradeSelect = document.createElement('select');
-    gradeSelect.style.cssText = 'width: 80px; padding: 8px 4px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem;';
+    gradeSelect.className = 'member-grade-select';
     gradeSelect.innerHTML = `
       <option value="all">全学年</option>
       <option value="1">1年</option>
@@ -59,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 部員選択（flex: 1 で最大の幅を確保）
     const userSelect = document.createElement('select');
     userSelect.className = 'member-select';
-    userSelect.style.cssText = 'flex: 1; min-width: 0; padding: 8px; font-size: 0.95rem; border-radius: 6px; border: 1px solid #ccc;';
 
     // 部員リスト更新関数
     const updateMemberList = () => {
@@ -84,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     delBtn.type = 'button';
     delBtn.textContent = '✕';
     delBtn.title = '行を削除';
-    delBtn.style.cssText = 'width: 36px; height: 36px; padding: 0; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; flex-shrink: 0; font-weight: bold;';
+    delBtn.className = 'member-row-delete';
     delBtn.addEventListener('click', () => {
       if (memberListDiv.children.length > 1) {
         card.remove();
@@ -99,11 +91,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- 2行目: 担当パート（複数チェックボックス & Other自由入力） ---
     const partRow = document.createElement('div');
-    partRow.style.cssText = 'display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #fff; padding: 8px 10px; border-radius: 6px; border: 1px solid #eee;';
+    partRow.className = 'member-part-row';
 
     const partLabel = document.createElement('span');
     partLabel.textContent = '担当パート:';
-    partLabel.style.cssText = 'font-weight: bold; font-size: 0.85rem; color: #4b5563;';
+    partLabel.className = 'member-part-label';
     partRow.appendChild(partLabel);
 
     // Otherのテキスト入力フィールド（初期は非表示）
@@ -111,11 +103,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     otherTextInput.type = 'text';
     otherTextInput.placeholder = '楽器名を入力';
     otherTextInput.className = 'other-part-text';
-    otherTextInput.style.cssText = 'display: none; width: 120px; padding: 4px 8px; font-size: 0.85rem; border: 1px solid #ccc; border-radius: 4px;';
 
     partsList.forEach(p => {
       const label = document.createElement('label');
-      label.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; font-size: 0.9rem; cursor: pointer;';
+      label.className = 'member-part-option';
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
@@ -125,11 +116,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Otherがチェンジされたときの処理
       if (p === 'Other') {
         checkbox.addEventListener('change', (e) => {
+          otherTextInput.classList.toggle('is-visible', e.target.checked);
           if (e.target.checked) {
-            otherTextInput.style.display = 'inline-block';
             otherTextInput.focus();
           } else {
-            otherTextInput.style.display = 'none';
             otherTextInput.value = '';
           }
         });

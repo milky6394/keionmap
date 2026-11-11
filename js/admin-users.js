@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (filtered.length === 0) {
-      userTableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #6b7280;">該当するユーザーが見つかりません</td></tr>';
+      userTableBody.innerHTML = '<tr><td colspan="5" class="admin-users-empty">該当するユーザーが見つかりません</td></tr>';
       return;
     }
 
@@ -184,12 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     msgEdit.textContent = '';
-    msgEdit.style.color = 'red';
+    msgEdit.classList.remove('message-status-success');
+    msgEdit.classList.add('message-status-error');
 
     // 保存開始時：ボタンを「保存中…」に変更し、クリック操作をロックする
     saveBtn.disabled = true;
     saveBtn.textContent = '保存中…';
-    closeEditModalBtn.style.pointerEvents = 'none';
+    closeEditModalBtn.classList.add('is-interaction-disabled');
 
     try {
       const res = await fetch(`${BACKEND_URL}/api/admin/users/update`, {
@@ -200,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (data.success) {
-        msgEdit.style.color = 'green';
+        msgEdit.classList.remove('message-status-error');
+        msgEdit.classList.add('message-status-success');
         msgEdit.textContent = '登録情報を更新しました！';
 
         setTimeout(() => {
@@ -223,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetButtons() {
     saveBtn.disabled = false;
     saveBtn.textContent = '変更内容を保存';
-    closeEditModalBtn.style.pointerEvents = 'auto';
+    closeEditModalBtn.classList.remove('is-interaction-disabled');
   }
 
   // ----------------------------------------------------
@@ -256,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     msgDelete.textContent = '';
     deleteAccountBtn.disabled = true;
     deleteAccountBtn.textContent = '削除処理中…';
-    closeDeleteModalBtn.style.pointerEvents = 'none';
+    closeDeleteModalBtn.classList.add('is-interaction-disabled');
 
     try {
       const res = await fetch(`${BACKEND_URL}/api/admin/users/${encodeURIComponent(currentTargetUser.username)}`, {
@@ -283,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetDeleteButtons() {
     deleteAccountBtn.disabled = !confirmCheck.checked;
     deleteAccountBtn.textContent = 'アカウントを削除して退部させる';
-    closeDeleteModalBtn.style.pointerEvents = 'auto';
+    closeDeleteModalBtn.classList.remove('is-interaction-disabled');
   }
 
   function escapeHtml(str) {

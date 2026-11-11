@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtn.textContent = '削除処理中…';
 
     if (backBtn) {
-      backBtn.style.pointerEvents = 'none';
-      backBtn.style.opacity = '0.6';
+      backBtn.classList.add('is-interaction-disabled');
     }
 
     try {
@@ -75,8 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtn.textContent = 'アカウントを削除して退部する';
 
     if (backBtn) {
-      backBtn.style.pointerEvents = 'auto';
-      backBtn.style.opacity = '1';
+      backBtn.classList.remove('is-interaction-disabled');
     }
   }
 });

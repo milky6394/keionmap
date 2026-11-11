@@ -4,87 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ユーザー管理 - 管理者メニュー</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* テーブルおよび操作ボタン等の補助スタイル */
-    .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-    .filter-bar input, .filter-bar select { padding: 8px 12px; border: 1px solid var(--border-color, #ccc); border-radius: 6px; font-size: 0.95rem; }
-    .filter-bar input { flex: 1; min-width: 200px; }
-
-    .table-container { background: #fff; border-radius: 8px; border: 1px solid var(--border-color, #e5e7eb); overflow-x: auto; margin-bottom: 20px; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
-    th, td { padding: 12px 16px; border-bottom: 1px solid var(--border-color, #e5e7eb); }
-    th { background: #f3f4f6; font-weight: 600; }
-    tr:hover { background: #f9fafb; }
-
-    /* コンパクトな操作ボタン */
-    .action-btn { 
-      padding: 4px 8px; 
-      border: none; 
-      border-radius: 4px; 
-      cursor: pointer; 
-      font-size: 0.82rem; 
-      font-weight: bold; 
-      margin-right: 4px;
-      display: inline-block;
-      width: fit-content;
-      line-height: 1.2;
-    }
-    .btn-edit-user { background: #3b82f6; color: white; }
-    .btn-delete-user { background: #ef4444; color: white; }
-
-    /* モーダル枠構造 */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; padding: 16px; overflow-y: auto; }
-    .modal-overlay.active { display: flex; }
-    .modal-overlay .card { box-sizing: border-box; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; margin: auto; }
-    .hidden { display: none !important; }
-
-    @media (max-width: 640px) {
-      .container { width: 100%; box-sizing: border-box; }
-      .header h1 { font-size: 1.35rem; }
-      .filter-bar { gap: 8px; }
-      .filter-bar input { flex-basis: 100%; min-width: 0; }
-      .filter-bar select { flex: 1; min-width: 0; }
-      .table-container { overflow: visible; border: 0; background: transparent; }
-      table, tbody { display: block; width: 100%; }
-      thead { display: none; }
-      tbody tr {
-        display: block;
-        margin-bottom: 12px;
-        padding: 4px 12px;
-        background: #fff;
-        border: 1px solid var(--border-color, #e5e7eb);
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-      }
-      tbody td {
-        display: grid;
-        grid-template-columns: minmax(88px, 34%) minmax(0, 1fr);
-        gap: 8px;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 10px 0;
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
-      tbody td::before {
-        content: attr(data-label);
-        color: #6b7280;
-        font-size: 0.85rem;
-        font-weight: 600;
-      }
-      tbody td[colspan] { display: block; text-align: center; }
-      tbody td[colspan]::before { content: none; }
-      tbody td:last-child:not([colspan]) { display: flex; flex-wrap: wrap; gap: 8px; }
-      tbody td:last-child:not([colspan])::before { content: attr(data-label); width: 100%; }
-      .action-btn { margin: 0; }
-      .modal-overlay { align-items: flex-start; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
 </head>
-<body>
+<body class="admin-users-page">
 
-  <div class="container" style="max-width: 1000px; margin: 20px auto; padding: 0 16px;">
+  <div class="container admin-users-container">
     <header class="header">
       <h1>👥 ユーザー管理（管理者用）</h1>
       <p class="subtitle">部員の登録情報編集・強制退部処理を行います</p>
@@ -119,7 +43,7 @@
           </tr>
         </thead>
         <tbody id="userTableBody">
-          <tr><td colspan="5" style="text-align: center; color: #6b7280;">読み込み中…</td></tr>
+          <tr><td colspan="5" class="admin-users-loading">読み込み中…</td></tr>
         </tbody>
       </table>
     </div>

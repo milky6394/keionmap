@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>バンド一覧 Excel出力 - 部内管理システム</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
   <!-- SheetJS (Excelファイル生成ライブラリ) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -14,10 +14,10 @@
     <h2>🎸 バンド一覧 Excel出力</h2>
     <p class="subtitle">データベースからバンド情報を取得し、バンド別シートのExcelを作成します</p>
 
-    <div class="status-box" style="text-align: center; padding: 20px 0;">
+    <div class="status-box excel-status">
       <p id="status-message">「ダウンロード」ボタンを押すとExcelファイルを生成します。</p>
       
-      <button type="button" id="download-btn" class="btn-primary" style="margin-top: 15px; width: auto; padding: 12px 30px; font-size: 16px;">
+      <button type="button" id="download-btn" class="btn-primary excel-download-button">
         📥 バンド一覧Excelをダウンロード
       </button>
     </div>

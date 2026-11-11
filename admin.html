@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理者専用ダッシュボード | 部活管理システム</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261112-style-externalized">
 </head>
 <body>
 
@@ -15,10 +15,10 @@
       <p>このページにアクセスするには合言葉が必要です。</p>
       
       <form id="auth-form" onsubmit="verifyPasscode(event)">
-        <div class="form-group" style="margin-bottom: 15px;">
-          <input type="password" id="passcode-input" placeholder="合言葉を入力" required autofocus autocomplete="off" style="width: 100%; padding: 10px; box-sizing: border-box;">
+        <div class="form-group admin-auth-group">
+          <input type="password" id="passcode-input" class="admin-passcode-input" placeholder="合言葉を入力" required autofocus autocomplete="off">
         </div>
-        <p id="auth-error" class="error-text" style="display: none; color: red; margin-bottom: 15px;">合言葉が違います。</p>
+        <p id="auth-error" class="error-text admin-auth-error">合言葉が違います。</p>
         
         <div class="modal-buttons">
           <button type="submit" class="btn-primary">認証</button>
@@ -29,7 +29,7 @@
   </div>
 
   <!-- 🛡️ 管理者コンテンツ（認証成功後に表示） -->
-  <div id="admin-content" class="container" style="display: none;">
+  <div id="admin-content" class="container admin-content">
     <header class="header">
       <h1>⚙️ 管理者専用ダッシュボード</h1>
       <p class="subtitle">部活の各種管理機能にアクセスできます。</p>
@@ -53,13 +53,13 @@
 
       </div>
 
-      <div style="margin-top: 30px;">
+      <div class="admin-back-wrapper">
         <a href="dashboard.html"><button class="btn-secondary">トップへ戻る</button></a>
       </div>
     </main>
   </div>
 
   <script src="js/config.js"></script>
-  <script src="js/admin.js?v=20261105-admin-session"></script>
+  <script src="js/admin.js?v=20261112-style-externalized"></script>
 </body>
 </html>
