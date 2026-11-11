@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // リアルタイム検索フィルター
   searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
+    const query = normalizeSearchText(e.target.value);
 
     if (!query) {
       renderBands(allBandsData);
@@ -30,14 +30,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const filtered = allBandsData.filter(band => {
-      // バンド名で検索
-      const matchBandName = band.band_name.toLowerCase().includes(query);
-      const matchCurrentSongs = String(band.current_songs || '').toLowerCase().includes(query);
-
-      // メンバー名・パート名で検索
+      const matchBandName = normalizeSearchText(band.band_name).includes(query);
+      const matchCurrentSongs = normalizeSearchText(band.current_songs).includes(query);
       const matchMember = (band.members || []).some(m =>
-        (m.username || '').toLowerCase().includes(query) ||
-        (m.part || '').toLowerCase().includes(query)
+        normalizeSearchText(m.username).includes(query) ||
+        normalizeSearchText(m.part).includes(query)
       );
 
       return matchBandName || matchCurrentSongs || matchMember;
@@ -45,6 +42,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     renderBands(filtered);
   });
+
+  function normalizeSearchText(value) {
+    return String(value || '').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
+  }
 
   // バンドカード描画関数
   function renderBands(bands) {
